@@ -3,8 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+public enum PlayerState
+{
+    Idle,
+    Move,
+    SlowMove,
+    Attack,
+}
+
 public class PlayerController : MonoBehaviour
 {
+    PlayerState playerState;
+
     public FixedJoystick joystick;
     public float speed = 6;
     public float shotRange = 2;
@@ -18,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
     public List<GameObject> monsters; // 몬스터 타겟 리스트
     private Transform targetT;
+    private GameObject targets;
 
 
     private void Update()
@@ -45,22 +56,27 @@ public class PlayerController : MonoBehaviour
 
             if (UpdateColliderGrassStatus() > 0)
             {
+                playerState = PlayerState.SlowMove;
                 speed = 3;
                 animator.SetBool("playerOnGround", true);
             }
             else
             {
+                playerState = PlayerState.Move;
                 speed = 6;
                 animator.SetBool("playerOnGround", false);
             }
         }
         else
+        {
+            playerState = PlayerState.Idle;
             animator.SetBool("playerMove", false);
+        }
     }
 
     private int UpdateColliderGrassStatus()
     {
-        // 플레이어 밑에 가상의 박스와 부딪히는 Ground 레이어 체크후 부딪히는 레이어의 개  수 반환
+        // 플레이어 밑에 가상의 박스와 부딪히는 Ground 레이어 체크후 부딪히는 레이어의 개 수 반환
         Collider[] hitColliders =
             Physics.OverlapBox(grassCheckTransform.position, new Vector3(0.2f, 0.1f, 0.2f), Quaternion.identity, grassCheckLayerMask);
 
@@ -75,18 +91,22 @@ public class PlayerController : MonoBehaviour
 
         if (monsters.Count > 0)
         {
+            GameObject _target = null;
             Transform target = null;
-            float shortDis = float.MaxValue;
+            float maxDis = float.MaxValue;
             foreach (var monster in monsters)
             {
-                float distance = Vector3.Distance(transform.position, monster.transform.position);
+                float targetdistance = Vector3.Distance(transform.position, monster.transform.position);
 
-                if (distance < shortDis)
+                if (targetdistance < maxDis)
                 {
+                    _target = monster;
                     target = monster.transform;
-                    shortDis = distance;
+                    maxDis = targetdistance;
                 }
             }
+
+            targets = _target;
             targetT = target.transform;
             GunAim();
         }
@@ -95,18 +115,27 @@ public class PlayerController : MonoBehaviour
     private void GunAim()
     {
         float targetDistance = Vector3.Distance(transform.position, targetT.position);
-        if (targetDistance < shotRange)
+        if (targetDistance < shotRange && playerState == PlayerState.Idle)
         {
+            playerState = PlayerState.Attack;
             transform.LookAt(targetT);
-            animator.SetTrigger("gunFire");
+            speed = 0;
+            Attack();
         }
+        else
+            speed = 6;
     }
 
     private void Attack()
     {
-        GameObject _monster = GameObject.FindWithTag("Monster");
-        Monsters monster = _monster.GetComponent<Monsters>();
+        if (monsters.Count <= 0)
+            return;
 
+        Monsters monster = targets.GetComponent<Monsters>();
+
+        animator.SetTrigger("gunFire");
         monster.Hurt(shotDamage);
+
+        playerState = PlayerState.Idle;
     }
 }

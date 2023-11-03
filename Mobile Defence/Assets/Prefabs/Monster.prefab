@@ -118,5 +118,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb079f0047b1439458dc8dc945b75747, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterSpeed: 2
-  monsterLife: 0
+  monsterSpeed: 1.5
+  monsterHp: 0

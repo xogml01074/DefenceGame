@@ -54,7 +54,7 @@ public class Monsters : MonoBehaviour
 
         SpawnPoint(transform.position);
 
-        monsterSpeed = 3;
+        monsterSpeed = 1.5f;
         monsterHp = gameM.round * 5;
         monsterDead = false;
 
