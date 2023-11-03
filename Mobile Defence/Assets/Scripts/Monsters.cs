@@ -19,7 +19,7 @@ public class Monsters : MonoBehaviour
 
     public float monsterSpeed;
     private bool monsterDead;
-    public float monsterLife;
+    public float monsterHp;
 
     private int dstIdx;
     private int spawnPoint;
@@ -42,7 +42,7 @@ public class Monsters : MonoBehaviour
         gameM = GameObject.Find("GameManager").GetComponent<GameManager>();
         monsterSpawnM = GameObject.Find("MonsterSpawnManager").GetComponent<MonsterSpawnManager>();
 
-        playerC.monsters.Add(transform); // »ı¼ºµÉ ¶§ PlayerControllerÄÄÆ÷³ÍÆ®¿¡ ÀÖ´Â Å¸°Ù¸®½ºÆ®¿¡ Ãß°¡
+        playerC.monsters.Add(gameObject); // ìƒì„±ë  ë•Œ PlayerControllerì»´í¬ë„ŒíŠ¸ì— ìˆëŠ” íƒ€ê²Ÿë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
 
         road1 = WaypointManager.Instance.road1;
         road2 = WaypointManager.Instance.road2;
@@ -55,7 +55,7 @@ public class Monsters : MonoBehaviour
         SpawnPoint(transform.position);
 
         monsterSpeed = 3;
-        monsterLife = gameM.round * 5;
+        monsterHp = gameM.round * 5;
         monsterDead = false;
 
         dstIdx = 0;
@@ -73,13 +73,13 @@ public class Monsters : MonoBehaviour
     {
         if (!monsterDead)
         {
-            // ¸ó½ºÅÍ°¡ ´ÙÀ½ ¿şÀÌÆ÷ÀÎÆ® ±îÁö µµ´ŞÇÏÁö ¸øÇßÀ»½Ã ¿şÀÌÆ÷ÀÎÆ® À§Ä¡±îÁö ÀÌµ¿
+            // ëª¬ìŠ¤í„°ê°€ ë‹¤ìŒ ì›¨ì´í¬ì¸íŠ¸ ê¹Œì§€ ë„ë‹¬í•˜ì§€ ëª»í–ˆì„ì‹œ ì›¨ì´í¬ì¸íŠ¸ ìœ„ì¹˜ê¹Œì§€ ì´ë™
             if (Vector3.Distance(transform.position, road[dstIdx].position) >= 0.01f)
             {
                 transform.LookAt(road[dstIdx].position);
                 transform.Translate(Vector3.forward * monsterSpeed * Time.deltaTime);
             }
-            // ¸¸¾à ¸ó½ºÅÍÀÇ À§Ä¡°¡ road1ÀÇ ´ÙÀ½ ¿şÀÌÆ÷ÀÎÆ®¿¡ À§Ä¡ÇÏÁö ¾Ê¾Ò´Ù¸é ¸ó½ºÅÍ¸¦ ´ÙÀ½ ¿şÀÌÆ÷ÀÎÆ®·Î ÀÌµ¿
+            // ë§Œì•½ ëª¬ìŠ¤í„°ì˜ ìœ„ì¹˜ê°€ road1ì˜ ë‹¤ìŒ ì›¨ì´í¬ì¸íŠ¸ì— ìœ„ì¹˜í•˜ì§€ ì•Šì•˜ë‹¤ë©´ ëª¬ìŠ¤í„°ë¥¼ ë‹¤ìŒ ì›¨ì´í¬ì¸íŠ¸ë¡œ ì´ë™
             else
                 dstIdx++;
         }
@@ -98,10 +98,17 @@ public class Monsters : MonoBehaviour
         }
     }
 
-    // ¸ó½ºÅÍ°¡ Å¸¿ö ¶Ç´Â ÇÃ·¹ÀÌ¾î¿¡ ÀÇÇØ »ç¸Á½Ã ½ÇÇà
+    public void Hurt(float damage)
+    {
+        monsterHp -= damage;
+
+        // ì¶”í›„ ëª¬ìŠ¤í„° ì²´ë ¥ë°”ì™€ ì‚¬ìš´ë“œ ì¶”ê°€
+    }
+
+    // ëª¬ìŠ¤í„°ê°€ íƒ€ì›Œ ë˜ëŠ” í”Œë ˆì´ì–´ì— ì˜í•´ ì‚¬ë§ì‹œ ì‹¤í–‰
     public void MonsterDead()
     {
-        if (!monsterDead && monsterLife <= 0)
+        if (!monsterDead && monsterHp <= 0)
         {
             gameM.monsterCount--;
             playerC.monsters.RemoveAt(0);
@@ -109,7 +116,7 @@ public class Monsters : MonoBehaviour
         }
     }
 
-    // ¸ó½ºÅÍ°¡ ¸ñÀûÁö µµÂø½Ã ½ÇÇà
+    // ëª¬ìŠ¤í„°ê°€ ëª©ì ì§€ ë„ì°©ì‹œ ì‹¤í–‰
     public void MonsterEndZone()
     {
         if (!monsterDead)

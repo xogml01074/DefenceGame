@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    public Transform target; // Ä«¸Ş¶ó°¡ µû¶ó°¥ ´ë»ó
-    public Vector3 distance = new Vector3(0, 15, -4); // Ä«¸Ş¶ó¿Í ÄÉ¸¯ÅÍ »çÀÌÀÇ °Å¸®
-    public Vector3 rotation = new Vector3(70, 0, 0); // Ä«¸Ş¶óÀÇ °¢µµ
+    public Transform target; // ì¹´ë©”ë¼ê°€ ë”°ë¼ê°ˆ ëŒ€ìƒ
+    public Vector3 distance = new Vector3(0, 15, -4); // ì¹´ë©”ë¼ì™€ ì¼€ë¦­í„° ì‚¬ì´ì˜ ê±°ë¦¬
+    public Vector3 rotation = new Vector3(70, 0, 0); // ì¹´ë©”ë¼ì˜ ê°ë„
 
     private void LateUpdate()
     {
         if(target != null)
         {
-            // Ä³¸¯ÅÍÀÇ À§Ä¡¿¡ Ä«¸Ş¶ó¿Í Ä³¸¯ÅÍ »çÀÌÀÇ °Å¸®¸¦ ´õÇØ¼­ Ä«¸Ş¶óÀÇ À§Ä¡¸¦ °áÁ¤
+            // ìºë¦­í„°ì˜ ìœ„ì¹˜ì— ì¹´ë©”ë¼ì™€ ìºë¦­í„° ì‚¬ì´ì˜ ê±°ë¦¬ë¥¼ ë”í•´ì„œ ì¹´ë©”ë¼ì˜ ìœ„ì¹˜ë¥¼ ê²°ì •
             Vector3 cameraPosition = target.position + distance;
-            // ¿øÇÏ´Â È¸Àü°ªÀ¸·Î Ä«¸Ş¶ó È¸Àü
+            // ì›í•˜ëŠ” íšŒì „ê°’ìœ¼ë¡œ ì¹´ë©”ë¼ íšŒì „
             Quaternion cameraRotation = Quaternion.Euler(rotation);
 
-            transform.position = cameraPosition; // Ä«¸Ş¶ó À§Ä¡¸¦ À§ÀÇ º¯¼ö À§Ä¡·Î ÀÌµ¿
-            transform.rotation = cameraRotation; // Ä«¸Ş¶ó °¢µµ¸¦ À§ÀÇ °¢µµ·Î È¸Àü
+            transform.position = cameraPosition; // ì¹´ë©”ë¼ ìœ„ì¹˜ë¥¼ ìœ„ì˜ ë³€ìˆ˜ ìœ„ì¹˜ë¡œ ì´ë™
+            transform.rotation = cameraRotation; // ì¹´ë©”ë¼ ê°ë„ë¥¼ ìœ„ì˜ ê°ë„ë¡œ íšŒì „
         }
     }
 }

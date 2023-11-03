@@ -7,9 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     public FixedJoystick joystick;
     public float speed = 6;
-    public float shotRange = 10;
-    private float shortDis = float.MaxValue;
-    private Transform monsterT;
+    public float shotRange = 2;
+    public float shotDamage = 3;
 
     public Transform grassCheckTransform;
     public LayerMask grassCheckLayerMask;
@@ -17,19 +16,20 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public GameManager gameM;
 
-    public List<Transform> monsters; // ∏ÛΩ∫≈Õ ≈∏∞Ÿ ∏ÆΩ∫∆Æ
+    public List<GameObject> monsters; // Î™¨Ïä§ÌÑ∞ ÌÉÄÍ≤ü Î¶¨Ïä§Ìä∏
+    private Transform targetT;
 
 
     private void Update()
     {
-        MonsterTargeting();
         PlayerMove();
+        MonsterTarget();
     }
     private void PlayerMove()
     {
 #if UNITY_ANDROID || UNITY_IOS
-        float h = joystick.Horizontal; // ¡∂¿ÃΩ∫∆Ω¿« ºˆ∆Ú ¿‘∑¬ ∞™
-        float v = joystick.Vertical; // ¡∂¿ÃΩ∫∆Ω¿« ºˆ¡˜ ¿‘∑¬ ∞™
+        float h = joystick.Horizontal; // Ï°∞Ïù¥Ïä§Ìã±Ïùò ÏàòÌèâ ÏûÖÎ†• Í∞í
+        float v = joystick.Vertical; // Ï°∞Ïù¥Ïä§Ìã±Ïùò ÏàòÏßÅ ÏûÖÎ†• Í∞í
 #else
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
@@ -60,46 +60,53 @@ public class PlayerController : MonoBehaviour
 
     private int UpdateColliderGrassStatus()
     {
-        // «√∑π¿ÃæÓ πÿø° ∞°ªÛ¿« π⁄Ω∫øÕ ∫Œµ˙»˜¥¬ Ground ∑π¿ÃæÓ √º≈©»ƒ ∫Œµ˙»˜¥¬ ∑π¿ÃæÓ¿« ∞≥ºˆ π›»Ø
+        // ÌîåÎ†àÏù¥Ïñ¥ Î∞ëÏóê Í∞ÄÏÉÅÏùò Î∞ïÏä§ÏôÄ Î∂ÄÎî™ÌûàÎäî Ground Î†àÏù¥Ïñ¥ Ï≤¥ÌÅ¨ÌõÑ Î∂ÄÎî™ÌûàÎäî Î†àÏù¥Ïñ¥Ïùò Í∞ú  Ïàò Î∞òÌôò
         Collider[] hitColliders =
             Physics.OverlapBox(grassCheckTransform.position, new Vector3(0.2f, 0.1f, 0.2f), Quaternion.identity, grassCheckLayerMask);
 
         return hitColliders.Length;
     }
 
-    // ∞°¿Â ∞°±ÓøÓ ¿˚ ≈∏∞‘∆√ «œ¥¬∞≈ º’∫¡æﬂ«‘
-    private void MonsterTargeting()
+    // Í∞ÄÏû• Í∞ÄÍπåÏö¥ Ï†Å ÌÉÄÍ≤åÌåÖ ÌïòÎäîÍ±∞ ÏÜêÎ¥êÏïºÌï®
+    private void MonsterTarget()
     {
-        if (gameM.roundStart && monsters.Count > 0)
+        if (!gameM.roundStart)
+            return;
+
+        if (monsters.Count > 0)
         {
-            foreach (Transform monster in monsters)
+            Transform target = null;
+            float shortDis = float.MaxValue;
+            foreach (var monster in monsters)
             {
-                float distance = Vector3.Distance(transform.position, monster.position);
+                float distance = Vector3.Distance(transform.position, monster.transform.position);
 
                 if (distance < shortDis)
                 {
+                    target = monster.transform;
                     shortDis = distance;
-                    monsterT = monster;
                 }
             }
-            if (shortDis <= shotRange)
-                GunFire(true);
-            else
-                GunFire(false);
+            targetT = target.transform;
+            GunAim();
         }
-
     }
 
-    private void GunFire(bool targeting)
+    private void GunAim()
     {
-        if (targeting)
+        float targetDistance = Vector3.Distance(transform.position, targetT.position);
+        if (targetDistance < shotRange)
         {
-            transform.LookAt(monsterT.position);
-            animator.SetBool("gunFire", true);
+            transform.LookAt(targetT);
+            animator.SetTrigger("gunFire");
         }
-        else
-        {
-            animator.SetBool("gunFire", false);
-        }
+    }
+
+    private void Attack()
+    {
+        GameObject _monster = GameObject.FindWithTag("Monster");
+        Monsters monster = _monster.GetComponent<Monsters>();
+
+        monster.Hurt(shotDamage);
     }
 }
