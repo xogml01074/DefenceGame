@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static UnityEngine.GraphicsBuffer;
 
 public enum PlayerState
 {
@@ -19,6 +21,8 @@ public class PlayerController : MonoBehaviour
     public float speed = 6;
     public float shotRange = 2;
     public float shotDamage = 3;
+    public GameObject bullet;
+    public Transform firePos;
 
     public Transform grassCheckTransform;
     public LayerMask grassCheckLayerMask;
@@ -28,7 +32,6 @@ public class PlayerController : MonoBehaviour
 
     public List<GameObject> monsters; // 몬스터 타겟 리스트
     private Transform targetT;
-    private GameObject targets;
 
 
     private void Update()
@@ -83,7 +86,7 @@ public class PlayerController : MonoBehaviour
         return hitColliders.Length;
     }
 
-    // 가장 가까운 적 타게팅 하는거 손봐야함
+    // 가장 가까운 적 타게팅 
     private void MonsterTarget()
     {
         if (!gameM.roundStart)
@@ -91,34 +94,38 @@ public class PlayerController : MonoBehaviour
 
         if (monsters.Count > 0)
         {
-            GameObject _target = null;
             Transform target = null;
             float maxDis = float.MaxValue;
             foreach (var monster in monsters)
             {
+                if (!monster)
+                    continue;
+
                 float targetdistance = Vector3.Distance(transform.position, monster.transform.position);
 
                 if (targetdistance < maxDis)
                 {
-                    _target = monster;
                     target = monster.transform;
                     maxDis = targetdistance;
                 }
             }
 
-            targets = _target;
-            targetT = target.transform;
+            targetT = target;
             GunAim();
         }
     }
 
+    // 적 조준
     private void GunAim()
     {
+        if (!gameM.roundStart || targetT == null)
+            return;
+
         float targetDistance = Vector3.Distance(transform.position, targetT.position);
-        if (targetDistance < shotRange && playerState == PlayerState.Idle)
+
+        if (targetDistance <= shotRange && playerState == PlayerState.Idle)
         {
             playerState = PlayerState.Attack;
-            transform.LookAt(targetT);
             speed = 0;
             Attack();
         }
@@ -128,14 +135,24 @@ public class PlayerController : MonoBehaviour
 
     private void Attack()
     {
-        if (monsters.Count <= 0)
+        if (targetT == null)
             return;
 
-        Monsters monster = targets.GetComponent<Monsters>();
+        Vector3 target = new Vector3(targetT.position.x, 2f, targetT.position.z);
+        transform.LookAt(target);
 
-        animator.SetTrigger("gunFire");
-        monster.Hurt(shotDamage);
+        animator.SetTrigger("gunFire"); // 사격시 애니메이션 조금 손봐야함
+    }
 
+    // 애니메이션 이벤트에 참조연결 
+    private void Fire()
+    {
+        if (targetT == null)
+            return;
+
+        Vector3 dir = targetT.position - transform.position; dir.y = 0f;
+
+        Instantiate(bullet, firePos.position, Quaternion.LookRotation(dir));
         playerState = PlayerState.Idle;
     }
 }

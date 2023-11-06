@@ -11,58 +11,78 @@ public class MonsterSpawnManager : MonoBehaviour
     public Vector3 monsterSpawnPoint4;
 
     public GameObject monsters;
-    public int monsterSpawnCount;
+    public int monsterLimit = 5;
+    public int currentLimit;
     public float monsterSpawnTime = 1;
-    public int monsterLimit;
+    public int r1Limit = 5;
+    public int r2Limit = 0;
+    public int r3Limit = 0;
+    public int r4Limit = 0;
 
     public GameManager gameM;
-
-    public void Start()
-    {
-        monsterLimit = 5;
-    }
 
     public void MonsterSpawn()
     {
         if (!gameM.roundStart && monsterLimit > 0)
             return;
 
-        if (monsterLimit > 0)
+        if (currentLimit < monsterLimit)
             monsterSpawnTime -= Time.deltaTime;
 
         if (monsterSpawnTime <= 0)
         {
-            Instantiate(monsters, monsterSpawnPoint3, Quaternion.identity);
+            if (r1Limit > 0)
+            {
+                Instantiate(monsters, monsterSpawnPoint1, Quaternion.identity);
+                currentLimit++;
+            }
+
+            if (r2Limit > 0)
+            {
+                Instantiate(monsters, monsterSpawnPoint2, Quaternion.identity);
+                currentLimit++;
+            }
+
+            if (r3Limit > 0)
+            {
+                Instantiate(monsters, monsterSpawnPoint3, Quaternion.identity);
+                currentLimit++;
+            }
+
+            if (r4Limit > 0)
+            {
+                Instantiate(monsters, monsterSpawnPoint4, Quaternion.identity);
+                currentLimit++;
+            }
+
             monsterSpawnTime = 1;
-            monsterLimit--;
-            monsterSpawnCount++;
         }
     }
 
-    // ¶ó¿îµå 40 ÀÌÀü ¸ó½ºÅÍ Ã¼·Â ¹× ÀÌµ¿¼Óµµ 
+    // ë¼ìš´ë“œ 40 ì´ì „ ëª¬ìŠ¤í„° ì²´ë ¥ ë° ì´ë™ì†ë„ 
     public void Round40DownMonsterPower()
     {
         if (gameM.round < 10)
         {
 
         }
-        // ¸ó½ºÅÍ Á¾·ù´Â ±âº», ½ºÇÇµå¾÷, Ã¼·Â¾÷, º¸½º´Â Ã¼·Â°ú µĞÈ­
+        // ëª¬ìŠ¤í„° ì¢…ë¥˜ëŠ” ê¸°ë³¸, ìŠ¤í”¼ë“œì—…, ì²´ë ¥ì—…, ë³´ìŠ¤ëŠ” ì²´ë ¥ê³¼ ë‘”í™”
 
-        // 5 ¶ó¿îµå ¸¶´Ù ¸ó½ºÅÍ Ã¼·Â°­È­ + ÀÌµ¿¼Óµµ °­È­
-        // 10 ¶ó¿îµå ¸¶´Ù ½ºÆù Æ÷ÀÎÆ® Ãß°¡ »ı¼º
+        // 5 ë¼ìš´ë“œ ë§ˆë‹¤ ëª¬ìŠ¤í„° ì²´ë ¥ê°•í™” + ì´ë™ì†ë„ ê°•í™”
+        // 10 ë¼ìš´ë“œ ë§ˆë‹¤ ìŠ¤í° í¬ì¸íŠ¸ ì¶”ê°€ ìƒì„±
     }
 
-    // ¶ó¿îµå 40 ÀÌÈÄ ¸ó½ºÅÍ Ã¼·Â ¹× ÀÌµ¿¼Óµµ
+    // ë¼ìš´ë“œ 40 ì´í›„ ëª¬ìŠ¤í„° ì²´ë ¥ ë° ì´ë™ì†ë„
     public void Round40UpMonsterPower()
     {
-        // ¸Å ¶ó¿îµå ¸¶´Ù ¸ó½ºÅÍ Ã¼·Â Áõ°¡ ÀÌµ¿¼Óµµ´Â Áõ°¡ÇÏÁö ¾ÊÀ½
+        // ë§¤ ë¼ìš´ë“œ ë§ˆë‹¤ ëª¬ìŠ¤í„° ì²´ë ¥ ì¦ê°€ ì´ë™ì†ë„ëŠ” ì¦ê°€í•˜ì§€ ì•ŠìŒ
     }
 
-    // º¸½º ¸ó½ºÅÍ Ã¼·Â ¹× ÀÌµ¿¼Óµµ
+    // ë³´ìŠ¤ ëª¬ìŠ¤í„° ì²´ë ¥ ë° ì´ë™ì†ë„
     public void BossMonsterPower()
     {
-        // º¸½º´Â ¿©·¯Á¾·ù¸¦ ¸ñÇ¥·Î ÇÏÁö¸¸ Áß°£ÇÁ·ÎÁ§Æ®¿£ ÇÑ Á¾·ù·Î ÇÒ ¿¹Á¤
-        // 10¶ó¿îµå ¸¶´Ù º¸½º ¸ó½ºÅÍ ¼ÒÈ¯
-        // º¸½º ¸ó½ºÅÍ´Â Ã¼·Â¸¸ Áõ°¡
+        // ë³´ìŠ¤ëŠ” ì—¬ëŸ¬ì¢…ë¥˜ë¥¼ ëª©í‘œë¡œ í•˜ì§€ë§Œ ì¤‘ê°„í”„ë¡œì íŠ¸ì—” í•œ ì¢…ë¥˜ë¡œ í•  ì˜ˆì •
+        // 10ë¼ìš´ë“œ ë§ˆë‹¤ ë³´ìŠ¤ ëª¬ìŠ¤í„° ì†Œí™˜
+        // ë³´ìŠ¤ ëª¬ìŠ¤í„°ëŠ” ì²´ë ¥ë§Œ ì¦ê°€
     }
 }

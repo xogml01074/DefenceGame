@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
         {
             rdStart.SetActive(false);
             rgTime.SetActive(true);
-            remainingTimeUI.text = $"Á¤ºñ ½Ã°£: {(int)remainingTime}ÃÊ";
+            remainingTimeUI.text = $"ì •ë¹„ ì‹œê°„: {(int)remainingTime}ì´ˆ";
         }
     }
     public void RoundStartUI(int round)
@@ -33,7 +33,7 @@ public class UIManager : MonoBehaviour
         {
             rgTime.SetActive(false);
             rdStart.SetActive(true);
-            roundStartUI.text = $"{round}¶ó¿îµå";
+            roundStartUI.text = $"{round}ë¼ìš´ë“œ";
         }
     }
 }

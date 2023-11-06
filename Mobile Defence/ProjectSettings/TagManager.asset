@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Map
   - Monster
+  - Wall
+  - Bullet
   layers:
   - Default
   - TransparentFX

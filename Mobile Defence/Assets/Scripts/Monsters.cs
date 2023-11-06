@@ -55,7 +55,7 @@ public class Monsters : MonoBehaviour
         SpawnPoint(transform.position);
 
         monsterSpeed = 1.5f;
-        monsterHp = gameM.round * 5;
+        monsterHp = gameM.round * 4;
         monsterDead = false;
 
         dstIdx = 0;
@@ -98,9 +98,16 @@ public class Monsters : MonoBehaviour
         }
     }
 
-    public void Hurt(float damage)
+    private void OnTriggerEnter(Collider other)
+    {        
+        if (other.gameObject.CompareTag("Bullet"))
+        {
+            Hurt();
+        }
+    }
+    public void Hurt()
     {
-        monsterHp -= damage;
+        monsterHp -= playerC.shotDamage;
 
         // 추후 몬스터 체력바와 사운드 추가
     }
@@ -111,7 +118,6 @@ public class Monsters : MonoBehaviour
         if (!monsterDead && monsterHp <= 0)
         {
             gameM.monsterCount--;
-            playerC.monsters.RemoveAt(0);
             Destroy(gameObject);
         }
     }
@@ -125,7 +131,6 @@ public class Monsters : MonoBehaviour
             {
                 gameM.monsterCount--;
                 gameM.playerLife--;
-                playerC.monsters.RemoveAt(0);
                 Destroy(gameObject);
             }
         }

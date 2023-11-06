@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public int monsterCount;
 
     public MonsterSpawnManager monsterSM;
+    public PlayerController playerC; 
     public UIManager uiM;
 
     private void Start()
@@ -28,8 +29,8 @@ public class GameManager : MonoBehaviour
     {
         GameOver();
 
-        uiM.RoundStartUI(round); // Á¤ºñ½Ã°£ÀÌ 0ÃÊ°¡ µÆÀ»¶§ ½ÇÇà
-        uiM.WaitingTimeUI(remainingTime); // Á¤ºñ½Ã°£ÀÌ 0 º¸´Ù Å©¸é ½ÇÇà   
+        uiM.RoundStartUI(round); // ì •ë¹„ì‹œê°„ì´ 0ì´ˆê°€ ëì„ë•Œ ì‹¤í–‰
+        uiM.WaitingTimeUI(remainingTime); // ì •ë¹„ì‹œê°„ì´ 0 ë³´ë‹¤ í¬ë©´ ì‹¤í–‰   
         
         RemainingTime();
         RoundStart();
@@ -45,8 +46,32 @@ public class GameManager : MonoBehaviour
         if (remainingTime <= 0)
         {
             roundStart = true;
-            if (monsterSM.monsterLimit < 50)
-                monsterSM.monsterLimit += 5;
+            if (round < 40)
+            {
+                if (monsterSM.r1Limit < 25)
+                {
+                    monsterSM.r1Limit += 4;
+                    monsterSM.monsterLimit += 4;
+                }
+
+                if (round > 10 && monsterSM.r2Limit < 15)
+                {
+                    monsterSM.r2Limit += 3;
+                    monsterSM.monsterLimit += 3;
+                }
+
+                if (round > 20 && monsterSM.r3Limit < 10)
+                {
+                    monsterSM.r2Limit += 2;
+                    monsterSM.monsterLimit += 2;
+                }
+
+                if (round > 30 && monsterSM.r2Limit < 10)
+                {
+                    monsterSM.r2Limit += 2;
+                    monsterSM.monsterLimit += 2;
+                }
+            }
 
             monsterCount = monsterSM.monsterLimit;
             round++;
@@ -58,13 +83,12 @@ public class GameManager : MonoBehaviour
             }
             else if (!(round % 10 == 0) && round > 40)
             {
-                monsterSM.monsterLimit = 50;
                 // monsterSM.Round40UPMonsterPower()
             }
         }
     }
 
-    // Á¤ºñ½Ã°£ ¸Å¼Òµå
+    // ì •ë¹„ì‹œê°„ ë§¤ì†Œë“œ
     public void RemainingTime()
     {
         if (!playerLive)
@@ -72,6 +96,8 @@ public class GameManager : MonoBehaviour
 
         if (remainingTime > 0 && monsterCount == 0)
         {
+            monsterSM.currentLimit = 0;
+            playerC.monsters.Clear();
             remainingTime -= Time.deltaTime;
             roundStart = false;
         }
@@ -84,7 +110,7 @@ public class GameManager : MonoBehaviour
 
         if (playerLife == 0)
         {
-            Debug.Log("Game Over"); // °ÔÀÓ¿À¹ö½Ã ³ª¿À´Â Àç½ÃÀÛ ¶Ç´Â ¸Ş´ºÈ­¸éÀ¸·Î ÀÌµ¿ UI
+            Debug.Log("Game Over"); // ê²Œì„ì˜¤ë²„ì‹œ ë‚˜ì˜¤ëŠ” ì¬ì‹œì‘ ë˜ëŠ” ë©”ë‰´í™”ë©´ìœ¼ë¡œ ì´ë™ UI
             roundStart = false;
             playerLive = false;
         }
