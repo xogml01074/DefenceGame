@@ -36,9 +36,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        Attack();
         PlayerMove();
         MonsterTarget();
     }
+
     private void PlayerMove()
     {
 #if UNITY_ANDROID || UNITY_IOS
@@ -49,7 +51,7 @@ public class PlayerController : MonoBehaviour
         float v = Input.GetAxis("Vertical");
 #endif
         Vector3 moveDirection = new Vector3(h, 0, v);
-        Vector3 movement = moveDirection * speed * Time.deltaTime;
+        Vector3 movement = moveDirection.normalized * speed * Time.deltaTime;
 
         if (moveDirection != Vector3.zero)
         {
@@ -105,13 +107,18 @@ public class PlayerController : MonoBehaviour
 
                 if (targetdistance < maxDis)
                 {
-                    target = monster.transform;
                     maxDis = targetdistance;
+                    target = monster.transform;
                 }
             }
 
-            targetT = target;
-            GunAim();
+            if (target != null && maxDis <= shotRange)
+            {
+                targetT = target;
+                GunAim();
+            }
+            else
+                targetT = null;
         }
     }
 
@@ -121,27 +128,28 @@ public class PlayerController : MonoBehaviour
         if (!gameM.roundStart || targetT == null)
             return;
 
-        float targetDistance = Vector3.Distance(transform.position, targetT.position);
-
-        if (targetDistance <= shotRange && playerState == PlayerState.Idle)
+        if (playerState == PlayerState.Idle)
         {
             playerState = PlayerState.Attack;
-            speed = 0;
-            Attack();
+
+            Vector3 target = new Vector3(targetT.position.x, 2f, targetT.position.z);
+            transform.LookAt(target);
         }
-        else
-            speed = 6;
     }
 
     private void Attack()
     {
         if (targetT == null)
+        {
+            speed = 6;
+            animator.ResetTrigger("gunFire");
             return;
-
-        Vector3 target = new Vector3(targetT.position.x, 2f, targetT.position.z);
-        transform.LookAt(target);
-
-        animator.SetTrigger("gunFire"); // 사격시 애니메이션 조금 손봐야함
+        }
+        if (playerState == PlayerState.Attack)
+        {
+            speed = 0;
+            animator.SetTrigger("gunFire"); // 총쏘다 움직이게 되면 사격 애니매이션인 채로 움직임
+        }
     }
 
     // 애니메이션 이벤트에 참조연결 
