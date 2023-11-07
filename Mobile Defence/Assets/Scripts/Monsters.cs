@@ -14,6 +14,7 @@ public class Monsters : MonoBehaviour
     GameManager gameM;
     PlayerController playerC;
     MonsterSpawnManager monsterSpawnM;
+    SoundManager soundM;
 
     Transform endZone;
 
@@ -41,6 +42,7 @@ public class Monsters : MonoBehaviour
         playerC = GameObject.Find("Player").GetComponent<PlayerController>();
         gameM = GameObject.Find("GameManager").GetComponent<GameManager>();
         monsterSpawnM = GameObject.Find("MonsterSpawnManager").GetComponent<MonsterSpawnManager>();
+        soundM = GameObject.Find("SoundManager").GetComponent<SoundManager>();
 
         playerC.monsters.Add(gameObject); // 생성될 때 PlayerController컴포넌트에 있는 타겟리스트에 추가
 
@@ -117,6 +119,7 @@ public class Monsters : MonoBehaviour
     {
         if (!monsterDead && monsterHp <= 0)
         {
+            soundM.MonsterDead();
             gameM.monsterCount--;
             Destroy(gameObject);
         }
