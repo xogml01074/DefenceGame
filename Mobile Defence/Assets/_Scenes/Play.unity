@@ -29718,8 +29718,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1011932507}
+  - component: {fileID: 1011932508}
   m_Layer: 0
-  m_Name: TurretCteateManager
+  m_Name: TurretCreateManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29758,6 +29759,23 @@ Transform:
   - {fileID: 321277609}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1011932508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011932506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baffb457427ed6844b85f33422d1213d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cannon: {fileID: 1875090778556656, guid: 7191a0df8b6695d449a0f18a361bc311, type: 3}
+  catapult: {fileID: 1791165765685050, guid: 16356cdf71fc4b0499d0b7fd3d6c0cd9, type: 3}
+  missle: {fileID: 1498501323785604, guid: def8b52e5e3714e43adcb23d43073949, type: 3}
+  missle2: {fileID: 1370505811353800, guid: 5abcbaa4c20adb04895a997e3d70772d, type: 3}
+  mortor: {fileID: 1591110490357510, guid: d4af3966dba2cd746ab019083640eb8c, type: 3}
 --- !u!1001 &1018968616
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35208,7 +35226,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2117669690189182454, guid: feb62447434f44642a447de4e34b370e, type: 3}
       propertyPath: m_Convex
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6306800558214106573, guid: feb62447434f44642a447de4e34b370e, type: 3}
       propertyPath: m_LocalPosition.x
