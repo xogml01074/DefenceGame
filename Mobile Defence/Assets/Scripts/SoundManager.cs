@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public AudioSource audioSource;
+    public AudioSource monsterDead;
+    public AudioSource gunShot;
+    
 
-    public void MonsterDead()
+    public void GunShotSound()
     {
-        audioSource.Play();
+        gunShot.Play();
+    }
+    public void MonsterDeadSound()
+    {
+        monsterDead.Play();
     }
 }

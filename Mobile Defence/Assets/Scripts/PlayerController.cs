@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
     public Animator animator;
     public GameManager gameM;
+    public SoundManager soundM;
 
     public List<GameObject> monsters; // 몬스터 타겟 리스트
     private Transform targetT;
@@ -160,6 +161,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 dir = targetT.position - transform.position; dir.y = 0f;
 
+        soundM.GunShotSound();
         Instantiate(bullet, firePos.position, Quaternion.LookRotation(dir));
         playerState = PlayerState.Idle;
     }

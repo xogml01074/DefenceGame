@@ -135,7 +135,7 @@ public class Monsters : MonoBehaviour
     {
         if (!monsterDead && currentHp <= 0)
         {
-            soundM.MonsterDead();
+            soundM.MonsterDeadSound();
             gameM.monsterCount--;
             Destroy(gameObject);
         }
