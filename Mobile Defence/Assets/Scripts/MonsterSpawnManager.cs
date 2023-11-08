@@ -10,8 +10,6 @@ public class MonsterSpawnManager : MonoBehaviour
     public Vector3 monsterSpawnPoint3;
     public Vector3 monsterSpawnPoint4;
 
-    public GameObject hpBar;
-
     public GameObject monsters;
     public int monsterLimit = 5;
     public int currentLimit;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.UI;
 
 public class Monsters : MonoBehaviour
@@ -18,12 +19,13 @@ public class Monsters : MonoBehaviour
 
     Transform endZone;
 
-    public float monsterSpeed;
-    private bool monsterDead;
+    GameObject hp;
+    Slider hpBar;
     public float maxHp;
     public float currentHp;
-    private Slider hpBar;
-    private Canvas hpC;
+
+    public float monsterSpeed;
+    private bool monsterDead;
 
     private int dstIdx;
     private int spawnPoint;
@@ -34,9 +36,11 @@ public class Monsters : MonoBehaviour
         gameM = GameObject.Find("GameManager").GetComponent<GameManager>();
         monsterSpawnM = GameObject.Find("MonsterSpawnManager").GetComponent<MonsterSpawnManager>();
         soundM = GameObject.Find("SoundManager").GetComponent<SoundManager>();
-        hpC = GameObject.Find("MonsterHp").GetComponent<Canvas>();
 
-        hpBar = Instantiate(monsterSpawnM.hpBar, hpC.transform).GetComponent<Slider>();
+        hp = transform.GetChild(6).gameObject;
+        Canvas hpC = hp.GetComponent<Canvas>();
+        hpC.worldCamera = Camera.main;
+        hpBar = hp.transform.GetChild(0).GetComponent<Slider>();
 
         playerC.monsters.Add(gameObject); // 생성될 때 PlayerController컴포넌트에 있는 타겟리스트에 추가
 
@@ -53,7 +57,6 @@ public class Monsters : MonoBehaviour
         monsterSpeed = 1.5f;
         maxHp = gameM.round * 4;
         currentHp = maxHp;
-        hpBar.value = currentHp / maxHp;
         monsterDead = false;
 
         dstIdx = 0;
@@ -65,13 +68,6 @@ public class Monsters : MonoBehaviour
         MonsterDead();
         MonsterEndZone();
         MonsterMove(GetMonsterRoad());
-    }
-
-    private void MonsterHpBar()
-    {
-        hpBar.value = Mathf.Lerp(hpBar.value, currentHp / maxHp, Time.deltaTime * 10);
-
-        hpBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3 (0, 0.5f, 0));
     }
 
     private void SpawnPoint(Vector3 sP)
@@ -123,11 +119,15 @@ public class Monsters : MonoBehaviour
             Hurt();
         }
     }
+
     public void Hurt()
     {
         currentHp -= playerC.shotDamage;
+    }
 
-        // 추후 몬스터 체력바와 사운드 추가
+    private void MonsterHpBar()
+    {
+        hpBar.value = Mathf.Lerp(hpBar.value, currentHp / maxHp, Time.deltaTime * 7);
     }
 
     // 몬스터가 타워 또는 플레이어에 의해 사망시 실행
@@ -135,7 +135,6 @@ public class Monsters : MonoBehaviour
     {
         if (!monsterDead && currentHp <= 0)
         {
-            // Destroy(hpB); 체력바 삭제
             soundM.MonsterDead();
             gameM.monsterCount--;
             Destroy(gameObject);
@@ -149,7 +148,7 @@ public class Monsters : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, endZone.position) <= 0.01f)
             {
-                // Destroy(hpB); 체력바 삭제
+                //soundM.MonsterEndZone(); 추후 몬스터 엔드존 도착 사운드 추가
                 gameM.monsterCount--;
                 gameM.playerLife--;
                 Destroy(gameObject);
