@@ -24,6 +24,7 @@ public class TurretCreateManager : MonoBehaviour
 
     private void TurretCreatePointClick()
     {
+
         if (Input.GetMouseButtonDown(0))
         {
             mousePos = Input.mousePosition;
@@ -36,7 +37,9 @@ public class TurretCreateManager : MonoBehaviour
                 if (hit.collider.name == "Tile_StoneV1")
                 {
                     canvas.SetActive(true); // 타워종류 UI 만든 후 나오게 만들고 클릭시 그 타워 생성
-                    spawnP = hit.collider.transform.position;
+
+                    if (spawnP == new Vector3(0, 0, 0))
+                        spawnP = hit.collider.transform.position;                        
                 }
             }
         }
