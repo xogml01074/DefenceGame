@@ -14,13 +14,10 @@ public class WaypointManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
-        {
             Instance = this;
-        }
+
         else
-        {
             Destroy(gameObject);
-        }
 
         road1 = InitializeWaypointsGroup("Road1_Waypoints");
         road2 = InitializeWaypointsGroup("Road2_Waypoints");
@@ -28,13 +25,13 @@ public class WaypointManager : MonoBehaviour
         road4 = InitializeWaypointsGroup("Road4_Waypoints");
     }
 
-    // ¿şÀÌÆ÷ÀÎÆ® ±×·ìÀÇ ¿şÀÌÆ÷ÀÎÆ®µéÀ» ¸®½ºÆ®¿¡ Ãß°¡ (±×·ì ¿ÀºêÁ§Æ®ÀÇ ÀÚ½Ä ¿şÀÌÆ÷ÀÎÆ®µéÀ» ¸®½ºÆ®¿¡ Ãß°¡)
+    // ì›¨ì´í¬ì¸íŠ¸ ê·¸ë£¹ì˜ ì›¨ì´í¬ì¸íŠ¸ë“¤ì„ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€ (ê·¸ë£¹ ì˜¤ë¸Œì íŠ¸ì˜ ìì‹ ì›¨ì´í¬ì¸íŠ¸ë“¤ì„ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€)
     private List<Transform> InitializeWaypointsGroup(string groupName)
     {
         List<Transform> waypointsList = new List<Transform>();
-        Transform waypointsGroup = GameObject.Find(groupName).transform; // ±×·ì ¿ÀºêÁ§Æ®ÀÇ Transform °¡Á®¿À±â
+        Transform waypointsGroup = GameObject.Find(groupName).transform; // ê·¸ë£¹ ì˜¤ë¸Œì íŠ¸ì˜ Transform ê°€ì ¸ì˜¤ê¸°
 
-        // ±×·ì ¿ÀºêÁ§Æ®ÀÇ ÀÚ½Ä ¿şÀÌÆ÷ÀÎÆ®µéÀ» ¸®½ºÆ®¿¡ Ãß°¡
+        // ê·¸ë£¹ ì˜¤ë¸Œì íŠ¸ì˜ ìì‹ ì›¨ì´í¬ì¸íŠ¸ë“¤ì„ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
         for (int i = 0; i < waypointsGroup.childCount; i++)
         {
             waypointsList.Add(waypointsGroup.GetChild(i));

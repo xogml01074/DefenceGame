@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static UnityEngine.GraphicsBuffer;
 
 public enum PlayerState
 {
@@ -84,7 +83,7 @@ public class PlayerController : MonoBehaviour
     {
         // 플레이어 밑에 가상의 박스와 부딪히는 Ground 레이어 체크후 부딪히는 레이어의 개 수 반환
         Collider[] hitColliders =
-            Physics.OverlapBox(grassCheckTransform.position, new Vector3(0.2f, 0.1f, 0.2f), Quaternion.identity, grassCheckLayerMask);
+            Physics.OverlapBox(grassCheckTransform.position, new Vector3(0.3f, 0.1f, 0.3f), Quaternion.identity, grassCheckLayerMask);
 
         return hitColliders.Length;
     }

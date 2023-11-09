@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretAI : MonoBehaviour {
+public class TurretAI : MonoBehaviour 
+{
 
     public enum TurretType
     {
@@ -41,7 +42,6 @@ public class TurretAI : MonoBehaviour {
     {
         gameM = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        InvokeRepeating("ChackForTarget", 0, 0.5f);
         //shotScript = GetComponent<TurretShoot_Base>();
 
         if (transform.GetChild(0).GetComponent<Animator>())
@@ -54,20 +54,19 @@ public class TurretAI : MonoBehaviour {
 	
 	void Update () 
     {
+        ChackForTarget();
+
         if (currentTarget != null)
         {
             FollowTarget();
 
             float currentTargetDist = Vector3.Distance(transform.position, currentTarget.transform.position);
             if (currentTargetDist > attackDist)
-            {
-                currentTarget = null;
-            }
+                currentTarget = null;            
         }
+
         else
-        {
-            IdleRitate();
-        }
+            IdleRotate();
 
         timer += Time.deltaTime;
         if (timer >= shootCoolDown)
@@ -156,7 +155,7 @@ public class TurretAI : MonoBehaviour {
         Gizmos.DrawWireSphere(transform.position, attackDist);
     }
 
-    public void IdleRitate()
+    public void IdleRotate()
     {
         bool refreshRandom = false;
         
