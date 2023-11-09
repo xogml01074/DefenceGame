@@ -35,6 +35,7 @@ public class TurretAI : MonoBehaviour
     private bool shootLeft = true;
 
     private Transform lockOnPos;
+    Collider[] colls;
 
     //public TurretShoot_Base shotScript;
 
@@ -93,7 +94,7 @@ public class TurretAI : MonoBehaviour
         if (!gameM.roundStart)
             return;
 
-        Collider[] colls = Physics.OverlapSphere(transform.position, attackDist);
+        colls = Physics.OverlapSphere(transform.position, attackDist);
         float distAway = Mathf.Infinity;
 
         for (int i = 0; i < colls.Length; i++)
