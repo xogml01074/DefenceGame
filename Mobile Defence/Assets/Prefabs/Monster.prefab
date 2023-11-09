@@ -348,6 +348,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb079f0047b1439458dc8dc945b75747, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turrets:
+  - {fileID: -7996560979261372938, guid: 7191a0df8b6695d449a0f18a361bc311, type: 3}
+  - {fileID: -3192346944096161978, guid: 16356cdf71fc4b0499d0b7fd3d6c0cd9, type: 3}
+  - {fileID: -3264285026040880174, guid: def8b52e5e3714e43adcb23d43073949, type: 3}
+  - {fileID: 6434724677184743909, guid: 5abcbaa4c20adb04895a997e3d70772d, type: 3}
+  - {fileID: 4776462778927959964, guid: d4af3966dba2cd746ab019083640eb8c, type: 3}
   maxHp: 0
   currentHp: 0
   monsterSpeed: 1.5

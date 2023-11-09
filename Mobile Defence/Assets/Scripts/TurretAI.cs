@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +10,8 @@ public class TurretAI : MonoBehaviour {
         Dual = 2,
         Catapult = 3,
     }
-    
+
+    private GameManager gameM;
     public GameObject currentTarget;
     public Transform turreyHead;
 
@@ -20,7 +21,6 @@ public class TurretAI : MonoBehaviour {
     private float timer;
     public float loockSpeed;
 
-    //public Quaternion randomRot;
     public Vector3 randomRot;
     public Animator animator;
 
@@ -37,7 +37,10 @@ public class TurretAI : MonoBehaviour {
 
     //public TurretShoot_Base shotScript;
 
-    void Start () {
+    void Start () 
+    {
+        gameM = GameObject.Find("GameManager").GetComponent<GameManager>();
+
         InvokeRepeating("ChackForTarget", 0, 0.5f);
         //shotScript = GetComponent<TurretShoot_Base>();
 
@@ -49,7 +52,8 @@ public class TurretAI : MonoBehaviour {
         randomRot = new Vector3(0, Random.Range(0, 359), 0);
     }
 	
-	void Update () {
+	void Update () 
+    {
         if (currentTarget != null)
         {
             FollowTarget();
@@ -87,12 +91,15 @@ public class TurretAI : MonoBehaviour {
 
     private void ChackForTarget()
     {
+        if (!gameM.roundStart)
+            return;
+
         Collider[] colls = Physics.OverlapSphere(transform.position, attackDist);
         float distAway = Mathf.Infinity;
 
         for (int i = 0; i < colls.Length; i++)
         {
-            if (colls[i].tag == "Player")
+            if (colls[i].tag == "Monster")
             {
                 float dist = Vector3.Distance(transform.position, colls[i].transform.position);
                 if (dist < distAway)
@@ -104,11 +111,11 @@ public class TurretAI : MonoBehaviour {
         }
     }
 
-    private void FollowTarget() //todo : smooth rotate
+    private void FollowTarget()
     {
         Vector3 targetDir = currentTarget.transform.position - turreyHead.position;
         targetDir.y = 0;
-        //turreyHead.forward = targetDir;
+
         if (turretType == TurretType.Single)
         {
             turreyHead.forward = targetDir;
@@ -121,9 +128,7 @@ public class TurretAI : MonoBehaviour {
 
     private void ShootTrigger()
     {
-        //shotScript.Shoot(currentTarget);
         Shoot(currentTarget);
-        //Debug.Log("We shoot some stuff!");
     }
     
     Vector3 CalculateVelocity(Vector3 target, Vector3 origen, float time)
