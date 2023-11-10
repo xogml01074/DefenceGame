@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     PlayerState playerState;
 
     public FixedJoystick joystick;
-    public float speed = 6;
+    public float moveSpeed = 6;
     public float shotRange = 4;
     public float shotDamage = 4;
     public GameObject bullet;
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
         float v = Input.GetAxis("Vertical");
 #endif
         Vector3 moveDirection = new Vector3(h, 0, v);
-        Vector3 movement = moveDirection.normalized * speed * Time.deltaTime;
+        Vector3 movement = moveDirection.normalized * moveSpeed * Time.deltaTime;
 
         if (moveDirection != Vector3.zero)
         {
@@ -72,18 +72,18 @@ public class PlayerController : MonoBehaviour
     {
         // 플레이어 밑에 가상의 박스와 부딪히는 Ground 레이어 체크후 부딪히는 레이어의 개 수 반환
         Collider[] hitColliders =
-            Physics.OverlapBox(grassCheckTransform.position, new Vector3(0.3f, 0.1f, 0.3f), Quaternion.identity, grassCheckLayerMask);
+            Physics.OverlapBox(grassCheckTransform.position, new Vector3(0.3f, 0.2f, 0.3f), Quaternion.identity, grassCheckLayerMask);
 
         if (hitColliders.Length > 0)
         {
             playerState = PlayerState.SlowMove;
-            speed = 3;
+            moveSpeed = 3;
             animator.SetBool("playerOnGround", true);
         }
         else
         {
             playerState = PlayerState.Move;
-            speed = 6;
+            moveSpeed = 6;
             animator.SetBool("playerOnGround", false);
         }
     }
@@ -141,15 +141,12 @@ public class PlayerController : MonoBehaviour
     {
         if (targetT == null)
         {
-            speed = 6;
             animator.ResetTrigger("gunFire");
             return;
         }
+
         if (playerState == PlayerState.Attack)
-        {
-            speed = 0;
             animator.SetTrigger("gunFire"); // 총쏘다 움직이게 되면 사격 애니매이션인 채로 움직임
-        }
     }
 
     // 애니메이션 이벤트에 참조연결 
