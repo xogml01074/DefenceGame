@@ -4877,7 +4877,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5141,6 +5140,7 @@ GameObject:
   - component: {fileID: 4595654756050798}
   - component: {fileID: 1384560066191542482}
   - component: {fileID: -7996560979261372938}
+  - component: {fileID: 1322106959137615291}
   m_Layer: 0
   m_Name: FattyCannonG02
   m_TagString: Untagged
@@ -5158,7 +5158,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4722236510932744}
@@ -5201,9 +5201,14 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   turreyHead: {fileID: 4722236510932744}
   attackDist: 5
-  attackDamage: 10
+  missleDamage: 0
+  catapultDamage: 0
+  mortorDamage: 0
   shootCoolDown: 1
   loockSpeed: 50
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 256
   randomRot: {x: 0, y: 0, z: 0}
   animator: {fileID: 0}
   turretType: 1
@@ -5211,6 +5216,26 @@ MonoBehaviour:
   muzzleSub: {fileID: 0}
   muzzleEff: {fileID: 1497772684437746, guid: bd75ef4ae186f454a90b2de71bed2854, type: 3}
   bullet: {fileID: 1230967522142342, guid: eb167afc8ab53774898a71ad9c87e1e8, type: 3}
+--- !u!114 &1322106959137615291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875090778556656}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6d741617e6a09646b7905d5aca9c22e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsters: []
+  turret: {fileID: 4722236510932744}
+  currentTarget: {fileID: 0}
+  cannonBullet: {fileID: 1833988619539146, guid: 9318a11cd670f3d4f924ff92fe7b0c77, type: 3}
+  shootPoint: {fileID: 1931211189434318}
+  randomRot: {x: 0, y: 0, z: 0}
+  cannonDamage: 0
+  cannonRange: 0
 --- !u!1 &1931211189434318
 GameObject:
   m_ObjectHideFlags: 0

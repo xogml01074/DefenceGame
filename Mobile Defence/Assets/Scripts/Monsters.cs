@@ -13,6 +13,7 @@ public class Monsters : MonoBehaviour
     List<Transform> road3;
     List<Transform> road4;
 
+    public TurretAI turret;
     GameManager gameM;
     PlayerController playerC;
     MonsterSpawnManager monsterSpawnM;
@@ -115,13 +116,43 @@ public class Monsters : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {        
-        if (other.gameObject.CompareTag("Bullet"))
-        {
-            Hurt();
-        }
+        if (other.gameObject.CompareTag("GunBullet"))
+            GunHurt();
+
+        if (other.gameObject.CompareTag("CannonBullet"))
+            CannonHurt();
+
+        if (other.gameObject.CompareTag("MissleBullet"))
+            MissleHurt();
+
+        if (other.gameObject.CompareTag("CatapultBullet"))
+            CatapultHurt();
+
+        //if (other.gameObject.CompareTag("MortorBullet"))
+        //    MortorHurt();
     }
 
-    public void Hurt()
+    public void MortorHurt()
+    {
+        currentHp -= turret.mortorDamage;
+    }
+
+    public void CannonHurt()
+    {
+       // currentHp -= turret.cannonDamage;
+    }
+
+    public void MissleHurt()
+    {
+        currentHp -= turret.missleDamage;
+    }
+
+    public void CatapultHurt()
+    {
+        currentHp -= turret.catapultDamage;
+    }
+
+    public void GunHurt()
     {
         currentHp -= playerC.shotDamage;
     }

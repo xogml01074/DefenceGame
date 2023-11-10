@@ -59,18 +59,7 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(moveDirection);
             transform.position += movement;
 
-            if (UpdateColliderGrassStatus() > 0)
-            {
-                playerState = PlayerState.SlowMove;
-                speed = 3;
-                animator.SetBool("playerOnGround", true);
-            }
-            else
-            {
-                playerState = PlayerState.Move;
-                speed = 6;
-                animator.SetBool("playerOnGround", false);
-            }
+            UpdateColliderGrassStatus();
         }
         else
         {
@@ -79,13 +68,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private int UpdateColliderGrassStatus()
+    private void UpdateColliderGrassStatus()
     {
         // 플레이어 밑에 가상의 박스와 부딪히는 Ground 레이어 체크후 부딪히는 레이어의 개 수 반환
         Collider[] hitColliders =
             Physics.OverlapBox(grassCheckTransform.position, new Vector3(0.3f, 0.1f, 0.3f), Quaternion.identity, grassCheckLayerMask);
 
-        return hitColliders.Length;
+        if (hitColliders.Length > 0)
+        {
+            playerState = PlayerState.SlowMove;
+            speed = 3;
+            animator.SetBool("playerOnGround", true);
+        }
+        else
+        {
+            playerState = PlayerState.Move;
+            speed = 6;
+            animator.SetBool("playerOnGround", false);
+        }
     }
 
     // 가장 가까운 적 타게팅 

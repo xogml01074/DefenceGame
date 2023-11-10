@@ -6,8 +6,10 @@ TagManager:
   tags:
   - Map
   - Monster
-  - Wall
-  - Bullet
+  - CatapultBullet
+  - CannonBullet
+  - MissleBullet
+  - GunBullet
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - UI
   - Player
   - Ground
-  - 
+  - Monster
   - 
   - 
   - 

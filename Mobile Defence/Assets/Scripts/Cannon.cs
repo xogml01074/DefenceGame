@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretAI : MonoBehaviour 
+public class Cannon : MonoBehaviour
 {
 
     public enum TurretType
@@ -44,7 +44,7 @@ public class TurretAI : MonoBehaviour
     private Transform lockOnPos;
     //public TurretShoot_Base shotScript;
 
-    void Start () 
+    void Start()
     {
         gameM = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerC = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -52,7 +52,7 @@ public class TurretAI : MonoBehaviour
         cannonRange = 5;
         missleDamage = 8;
         catapultDamage = 20;
-        mortorDamage = 30;       
+        mortorDamage = 30;
 
         //shotScript = GetComponent<TurretShoot_Base>();
 
@@ -63,13 +63,34 @@ public class TurretAI : MonoBehaviour
 
         randomRot = new Vector3(0, Random.Range(0, 359), 0);
     }
-	
-	void Update () 
+
+    void Update()
     {
         ChackForTarget();
 
+        if (currentTarget != null)
+            FollowTarget();
+
+        else
+            IdleRotate();
+
         timer += Time.deltaTime;
-	}
+        if (timer >= shootCoolDown)
+        {
+            if (currentTarget != null)
+            {
+                timer = 0;
+
+                if (animator != null)
+                {
+                    animator.SetTrigger("Fire");
+                    ShootTrigger();
+                }
+                else
+                    ShootTrigger();
+            }
+        }
+    }
 
     private void ChackForTarget()
     {
@@ -85,7 +106,7 @@ public class TurretAI : MonoBehaviour
 
             float targetDist = Vector3.Distance(transform.position, monster.transform.position);
 
-            if (targetDist < dist)
+            if (targetDist < dist && currentTarget == null)
             {
                 currentTarget = monster.gameObject;
                 dist = targetDist;
@@ -93,13 +114,11 @@ public class TurretAI : MonoBehaviour
         }
         if (currentTarget != null && dist <= cannonRange)
             FollowTarget();
-        else
-            IdleRotate();
     }
 
     private void FollowTarget()
     {
-        if (currentTarget == null)
+        if (currentTarget != null)
             return;
 
         Vector3 targetDir = currentTarget.transform.position - turreyHead.position;
@@ -110,26 +129,13 @@ public class TurretAI : MonoBehaviour
 
         else
             turreyHead.transform.rotation = Quaternion.RotateTowards(turreyHead.rotation, Quaternion.LookRotation(targetDir), loockSpeed * Time.deltaTime);
-
-        if (timer >= shootCoolDown)
-        {
-            timer = 0;
-
-            if (animator != null)
-            {
-                animator.SetTrigger("Fire");
-                ShootTrigger();
-            }
-            else
-                ShootTrigger();
-        }
     }
 
     private void ShootTrigger()
     {
         Shoot(currentTarget);
     }
-    
+
     Vector3 CalculateVelocity(Vector3 target, Vector3 origen, float time)
     {
         Vector3 distance = target - origen;
@@ -158,7 +164,7 @@ public class TurretAI : MonoBehaviour
     public void IdleRotate()
     {
         bool refreshRandom = false;
-        
+
         if (turreyHead.rotation != Quaternion.Euler(randomRot))
         {
             turreyHead.rotation = Quaternion.RotateTowards(turreyHead.transform.rotation, Quaternion.Euler(randomRot), loockSpeed * Time.deltaTime * 0.2f);
@@ -188,7 +194,7 @@ public class TurretAI : MonoBehaviour
             Projectile projectile = missleGo.GetComponent<Projectile>();
             projectile.target = lockOnPos;
         }
-        else if(turretType == TurretType.Dual)
+        else if (turretType == TurretType.Dual)
         {
             if (shootLeft)
             {
