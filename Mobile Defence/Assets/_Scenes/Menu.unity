@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: cc8a89d61fb64c6429fcb5d106968ae4, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -22825,7 +22825,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Defence
+  m_Text: "\uB514\uD39C\uC2A4\n(\uD3EC\uD1A0\uC0F5 \uB514\uC790\uC778 \uC608\uC815)"
 --- !u!222 &582102225
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -29765,7 +29765,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u3141\u3141\u3141"
+  m_Text: "\uD130\uB81B"
 --- !u!222 &999111223
 CanvasRenderer:
   m_ObjectHideFlags: 0

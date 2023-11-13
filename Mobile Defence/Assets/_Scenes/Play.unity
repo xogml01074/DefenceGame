@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 21a3ad436806f564c97c27801f1b0e4d, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -31388,6 +31388,7 @@ MonoBehaviour:
   mortor: {fileID: 1591110490357510, guid: d4af3966dba2cd746ab019083640eb8c, type: 3}
   cannonDamage: 20
   missleDamage: 10
+  missle2Damage: 7
   catapultDamage: 30
   spawnP: {x: 0, y: 0, z: 0}
 --- !u!1001 &1018968616
