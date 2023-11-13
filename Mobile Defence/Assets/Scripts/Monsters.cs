@@ -13,11 +13,11 @@ public class Monsters : MonoBehaviour
     List<Transform> road3;
     List<Transform> road4;
 
-    public TurretAI turret;
     GameManager gameM;
     PlayerController playerC;
     MonsterSpawnManager monsterSpawnM;
     SoundManager soundM;
+    TurretManager turretM;
 
     Transform endZone;
 
@@ -38,6 +38,7 @@ public class Monsters : MonoBehaviour
         gameM = GameObject.Find("GameManager").GetComponent<GameManager>();
         monsterSpawnM = GameObject.Find("MonsterSpawnManager").GetComponent<MonsterSpawnManager>();
         soundM = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+        turretM = GameObject.Find("TurretManager").GetComponent<TurretManager>();
 
         hp = transform.GetChild(6).gameObject;
         Canvas hpC = hp.GetComponent<Canvas>();
@@ -115,17 +116,20 @@ public class Monsters : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {        
+    {
         if (other.gameObject.CompareTag("GunBullet"))
             GunHurt();
 
-        if (other.gameObject.CompareTag("CannonBullet"))
+        else if (other.gameObject.CompareTag("CannonBullet"))
             CannonHurt();
 
-        if (other.gameObject.CompareTag("MissleBullet"))
+        else if (other.gameObject.CompareTag("MissleBullet"))
             MissleHurt();
 
-        if (other.gameObject.CompareTag("CatapultBullet"))
+        else if (other.gameObject.CompareTag("Missle2Bullet"))
+            Missle2Hurt();
+
+        else if (other.gameObject.CompareTag("CatapultBullet"))
             CatapultHurt();
 
         //if (other.gameObject.CompareTag("MortorBullet"))
@@ -134,25 +138,30 @@ public class Monsters : MonoBehaviour
 
     public void MortorHurt()
     {
-        currentHp -= turret.mortorDamage;
+        //currentHp -= turretM.mortorDamage;
     }
 
     public void CannonHurt()
     {
-       // currentHp -= turret.cannonDamage;
+        currentHp -= turretM.cannonDamage;
     }
 
     public void MissleHurt()
     {
-        currentHp -= turret.missleDamage;
+        currentHp -= turretM.missleDamage;
+    }
+
+    public void Missle2Hurt()
+    {
+        currentHp -= turretM.missle2Damage;
     }
 
     public void CatapultHurt()
     {
-        currentHp -= turret.catapultDamage;
+        currentHp -= turretM.catapultDamage;
     }
 
-    public void GunHurt()
+public void GunHurt()
     {
         currentHp -= playerC.shotDamage;
     }

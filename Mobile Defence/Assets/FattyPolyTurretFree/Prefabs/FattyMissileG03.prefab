@@ -5330,8 +5330,11 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   turreyHead: {fileID: 4033343639771536}
   attackDist: 4
-  attackDamage: 10
-  shootCoolDown: 1
+  cannonRange: 0
+  missleRange: 0
+  catapultRange: 0
+  mortorRange: 0
+  shootCoolDown: 0.5
   loockSpeed: 50
   layerMask:
     serializedVersion: 2
@@ -5342,7 +5345,7 @@ MonoBehaviour:
   muzzleMain: {fileID: 4820736348818312}
   muzzleSub: {fileID: 4343741383682628}
   muzzleEff: {fileID: 1497772684437746, guid: bd75ef4ae186f454a90b2de71bed2854, type: 3}
-  bullet: {fileID: 1773485284122676, guid: 9e0d59e1858a95d4aafcfc9ef7e94671, type: 3}
+  bullet: {fileID: 1773485284122676, guid: 6fb4d768ed322b64d94680bd353b54ad, type: 3}
 --- !u!1 &1399252442041522
 GameObject:
   m_ObjectHideFlags: 0

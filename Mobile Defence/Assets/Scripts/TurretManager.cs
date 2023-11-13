@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 
-public class TurretCreateManager : MonoBehaviour
+public class TurretManager : MonoBehaviour
 {
     public TurretUi tU;
     public GameObject canvas;
@@ -16,6 +16,11 @@ public class TurretCreateManager : MonoBehaviour
     public GameObject missle1;
     public GameObject missle2;
     public GameObject mortor;
+
+    public float cannonDamage = 20;
+    public float missleDamage = 10;
+    public float missle2Damage = 7;
+    public float catapultDamage = 30;
 
     public Vector3 spawnP;
     Vector3 mousePos;
@@ -40,7 +45,7 @@ public class TurretCreateManager : MonoBehaviour
                 if (hit.collider.name == "Tile_StoneV1")
                 {
                     if (spawnP == new Vector3(0, 0, 0))
-                        spawnP = hit.collider.transform.position;                        
+                        spawnP = hit.collider.transform.position;
 
                     canvas.SetActive(true); // 타워종류 UI 만든 후 나오게 만들고 클릭시 그 타워 생성
                 }
@@ -51,7 +56,7 @@ public class TurretCreateManager : MonoBehaviour
     public void CannonCreate()
     {
         Destroy(Instantiate(effect, spawnP + new Vector3(-1, 1.5f, 1), Quaternion.identity), 3f);
-        Instantiate(cannon, spawnP + new Vector3 (-1, 1, 1), Quaternion.identity);
+        Instantiate(cannon, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
         tU.ExitClickButton();
     }
     public void Missle1Create()

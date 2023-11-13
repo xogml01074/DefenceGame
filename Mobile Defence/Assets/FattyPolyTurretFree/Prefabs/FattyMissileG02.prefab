@@ -5012,8 +5012,11 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   turreyHead: {fileID: 4528818141007908}
   attackDist: 6
-  attackDamage: 10
-  shootCoolDown: 1
+  cannonRange: 0
+  missleRange: 0
+  catapultRange: 0
+  mortorRange: 0
+  shootCoolDown: 1.5
   loockSpeed: 50
   layerMask:
     serializedVersion: 2

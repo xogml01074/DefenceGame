@@ -20,9 +20,9 @@ public class TurretAI : MonoBehaviour
     public float attackDist = 10.0f;
 
     public float cannonRange;
-    public float missleDamage;
-    public float catapultDamage;
-    public float mortorDamage;
+    public float missleRange;
+    public float catapultRange;
+    public float mortorRange;
     public float shootCoolDown;
     private float timer;
     public float loockSpeed;
@@ -50,9 +50,9 @@ public class TurretAI : MonoBehaviour
         playerC = GameObject.Find("Player").GetComponent<PlayerController>();
 
         cannonRange = 5;
-        missleDamage = 8;
-        catapultDamage = 20;
-        mortorDamage = 30;       
+        missleRange = 8;
+        catapultRange = 20;
+        mortorRange = 30;       
 
         //shotScript = GetComponent<TurretShoot_Base>();
 
@@ -73,10 +73,14 @@ public class TurretAI : MonoBehaviour
 
     private void ChackForTarget()
     {
-        monsters = playerC.monsters;
         if (monsters.Count <= 0)
+        {
+            IdleRotate();
             return;
+        }
+        monsters = playerC.monsters;
 
+        float range;
         float dist = float.MaxValue;
         foreach (GameObject monster in monsters)
         {
@@ -91,7 +95,15 @@ public class TurretAI : MonoBehaviour
                 dist = targetDist;
             }
         }
-        if (currentTarget != null && dist <= cannonRange)
+
+        if (turretType == TurretType.Single)
+            range = cannonRange;
+        else if (turretType == TurretType.Dual)
+            range = missleRange;
+        else
+            range = catapultRange;
+
+        if (currentTarget != null && dist <= range)
             FollowTarget();
         else
             IdleRotate();
@@ -179,6 +191,9 @@ public class TurretAI : MonoBehaviour
 
     public void Shoot(GameObject go)
     {
+        if (currentTarget == null)
+            return;
+
         if (turretType == TurretType.Catapult)
         {
             lockOnPos = go.transform;

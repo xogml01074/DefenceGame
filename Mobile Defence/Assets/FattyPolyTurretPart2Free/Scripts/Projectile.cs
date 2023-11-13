@@ -22,9 +22,7 @@ public class Projectile : MonoBehaviour {
     private void Start()
     {
         if (catapult)
-        {
             lockOn = true;
-        }
 
         if (type == TurretAI.TurretType.Single)
         {
@@ -41,13 +39,13 @@ public class Projectile : MonoBehaviour {
             return;
         }
 
-        if (transform.position.y < -0.2F)
+        if (transform.position.y <= 1.5f)
         {
             Explosion();
         }
 
         boomTimer -= Time.deltaTime;
-        if (boomTimer < 0)
+        if (boomTimer <= 0)
         {
             Explosion();
         }
@@ -64,12 +62,8 @@ public class Projectile : MonoBehaviour {
         }else if(type == TurretAI.TurretType.Dual)
         {
             Vector3 dir = target.position - transform.position;
-            //float distThisFrame = speed * Time.deltaTime;
             Vector3 newDirection = Vector3.RotateTowards(transform.forward, dir, Time.deltaTime * turnSpeed, 0.0f);
             Debug.DrawRay(transform.position, newDirection, Color.red);
-
-            //transform.Translate(dir.normalized * distThisFrame, Space.World);
-            //transform.LookAt(target);
 
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
             transform.rotation = Quaternion.LookRotation(newDirection);

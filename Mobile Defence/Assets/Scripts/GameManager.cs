@@ -62,13 +62,13 @@ public class GameManager : MonoBehaviour
 
                 if (round > 20 && monsterSM.r3Limit < 10)
                 {
-                    monsterSM.r2Limit += 2;
+                    monsterSM.r3Limit += 2;
                     monsterSM.monsterLimit += 2;
                 }
 
                 if (round > 30 && monsterSM.r2Limit < 10)
                 {
-                    monsterSM.r2Limit += 2;
+                    monsterSM.r4Limit += 2;
                     monsterSM.monsterLimit += 2;
                 }
             }

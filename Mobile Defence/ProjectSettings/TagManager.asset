@@ -10,6 +10,7 @@ TagManager:
   - CannonBullet
   - MissleBullet
   - GunBullet
+  - MissleBullet2
   layers:
   - Default
   - TransparentFX

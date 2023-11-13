@@ -7,7 +7,7 @@ public class TurretUi : MonoBehaviour
 {
     public Animator anim;
     public GameObject canvas;
-    public TurretCreateManager tM;
+    public TurretManager tM;
 
     public void ExitClickButton()
     {
