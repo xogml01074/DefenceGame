@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public int round = 0;
     public bool roundStart = false;
 
+    public int gold;
+
     public int monsterCount;
 
     public MonsterSpawnManager monsterSM;
@@ -21,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        gold = 0;
+
         playerLife = 5;
         remainingTime = 30;
         monsterCount = 0;
@@ -31,6 +35,8 @@ public class GameManager : MonoBehaviour
 
         uiM.RoundStartUI(round); // 정비시간이 0초가 됐을때 실행
         uiM.WaitingTimeUI(remainingTime); // 정비시간이 0 보다 크면 실행   
+        uiM.SetPlayerLife(playerLife);
+        uiM.GetGold(gold);
         
         RemainingTime();
         RoundStart();

@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
     public Text roundStartUI;
     public GameObject rgTime;
     public GameObject rdStart;
+    public Text lifeUI;
+    public Text goldUI;
 
     public GameManager gameM;
 
@@ -35,5 +37,18 @@ public class UIManager : MonoBehaviour
             rdStart.SetActive(true);
             roundStartUI.text = $"{round}라운드";
         }
+    }
+
+    public void SetPlayerLife(int life)
+    {
+        if (life < 0)
+            life = 0;
+
+        lifeUI.text = $"X {life}";
+    }
+
+    public void GetGold(int gold)
+    {
+        goldUI.text = $"{gold}";
     }
 }

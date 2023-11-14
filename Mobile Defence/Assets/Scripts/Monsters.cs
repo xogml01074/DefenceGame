@@ -177,6 +177,7 @@ public void GunHurt()
         if (!monsterDead && currentHp <= 0)
         {
             soundM.MonsterDeadSound();
+            gameM.gold++;
             gameM.monsterCount--;
             Destroy(gameObject);
         }
