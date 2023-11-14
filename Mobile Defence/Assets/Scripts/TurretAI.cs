@@ -46,20 +46,17 @@ public class TurretAI : MonoBehaviour
 
     void Start () 
     {
-        gameM = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerC = GameObject.Find("Player").GetComponent<PlayerController>();
+        gameM = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         cannonRange = 5;
         missleRange = 8;
         catapultRange = 20;
         mortorRange = 30;       
 
-        //shotScript = GetComponent<TurretShoot_Base>();
 
         if (transform.GetChild(0).GetComponent<Animator>())
-        {
             animator = transform.GetChild(0).GetComponent<Animator>();
-        }
 
         randomRot = new Vector3(0, Random.Range(0, 359), 0);
     }
@@ -73,7 +70,7 @@ public class TurretAI : MonoBehaviour
 
     private void ChackForTarget()
     {
-        if (monsters.Count <= 0)
+        if (!gameM.roundStart || gameM.gameOver)
         {
             IdleRotate();
             return;

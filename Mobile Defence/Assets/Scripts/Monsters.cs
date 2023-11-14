@@ -88,6 +88,9 @@ public class Monsters : MonoBehaviour
 
     private void MonsterMove(List<Transform> road)
     {
+        if (gameM.gameOver)
+            return;
+
         if (!monsterDead)
         {
             // 몬스터가 다음 웨이포인트 까지 도달하지 못했을시 웨이포인트 위치까지 이동

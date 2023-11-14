@@ -10,6 +10,9 @@ public class UIManager : MonoBehaviour
     public Text roundStartUI;
     public GameObject rgTime;
     public GameObject rdStart;
+
+    public GameObject lifeIm;
+    public GameObject goldIm;
     public Text lifeUI;
     public Text goldUI;
 
@@ -22,6 +25,12 @@ public class UIManager : MonoBehaviour
 
     public void WaitingTimeUI(float remainingTime)
     {
+        if (gameM.gameOver)
+        {
+            rgTime.SetActive(false);
+            return;
+        }
+
         if (!gameM.roundStart)
         {
             rdStart.SetActive(false);
@@ -31,6 +40,12 @@ public class UIManager : MonoBehaviour
     }
     public void RoundStartUI(int round)
     {
+        if (gameM.gameOver)
+        {
+            rdStart.SetActive(false);
+            return;
+        }
+
         if (gameM.roundStart)
         {
             rgTime.SetActive(false);
@@ -41,6 +56,12 @@ public class UIManager : MonoBehaviour
 
     public void SetPlayerLife(int life)
     {
+        if (gameM.gameOver)
+        {
+            lifeIm.SetActive(false);
+            return;
+        }
+
         if (life < 0)
             life = 0;
 
@@ -49,6 +70,12 @@ public class UIManager : MonoBehaviour
 
     public void GetGold(int gold)
     {
+        if (gameM.gameOver)
+        {
+            goldIm.SetActive(false);
+            return;
+        }
+
         goldUI.text = $"{gold}";
     }
 }
