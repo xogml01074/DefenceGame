@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public int playerLife = 5;
     public bool playerLive = true;
 
-    public float remainingTime = 30;
+    public float remainingTime = 30.5f;
     public int round = 0;
     public bool roundStart = false;
     public bool gameOver = false;
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         gold = 0;
 
         playerLife = 5;
-        remainingTime = 30;
+        remainingTime = 30.5f;
         monsterCount = 0;
     }
     private void Update()
@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
 
             monsterCount = monsterSM.monsterLimit;
             round++;
-            remainingTime = 20;
+            remainingTime = 20.5f;
 
             if (!(round % 10 == 0) && round < 40)
             {

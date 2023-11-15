@@ -280,7 +280,7 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   turreyHead: {fileID: 4940591295711036}
   attackDist: 15
-  attackDamage: 30
+  range: 0
   shootCoolDown: 3
   loockSpeed: 40
   layerMask:
@@ -288,11 +288,11 @@ MonoBehaviour:
     m_Bits: 256
   randomRot: {x: 0, y: 0, z: 0}
   animator: {fileID: 0}
-  turretType: 1
+  turretType: 4
   muzzleMain: {fileID: 4411725851834284}
   muzzleSub: {fileID: 0}
-  muzzleEff: {fileID: 1868602337266200, guid: 6d074a749488789479e539251fdf184e, type: 3}
-  bullet: {fileID: 1230967522142342, guid: eb167afc8ab53774898a71ad9c87e1e8, type: 3}
+  muzzleEff: {fileID: 1497772684437746, guid: bd75ef4ae186f454a90b2de71bed2854, type: 3}
+  bullet: {fileID: 5121504431815077032, guid: 04afebe4e987bd342970989009b3b66c, type: 3}
 --- !u!1 &1658705116820196
 GameObject:
   m_ObjectHideFlags: 0

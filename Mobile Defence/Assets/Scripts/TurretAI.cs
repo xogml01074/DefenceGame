@@ -10,6 +10,7 @@ public class TurretAI : MonoBehaviour
         Single = 1,
         Dual = 2,
         Catapult = 3,
+        Mortor = 4,
     }
 
     private GameManager gameM;
@@ -19,10 +20,7 @@ public class TurretAI : MonoBehaviour
 
     public float attackDist = 10.0f;
 
-    public float cannonRange;
-    public float missleRange;
-    public float catapultRange;
-    public float mortorRange;
+    public float range;
     public float shootCoolDown;
     private float timer;
     public float loockSpeed;
@@ -49,11 +47,14 @@ public class TurretAI : MonoBehaviour
         playerC = GameObject.Find("Player").GetComponent<PlayerController>();
         gameM = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        cannonRange = 5;
-        missleRange = 8;
-        catapultRange = 20;
-        mortorRange = 30;       
-
+        if (turretType == TurretType.Single)
+            range = 5;
+        else if (turretType == TurretType.Dual)
+            range = 7;
+        else if (turretType == TurretType.Catapult)
+            range = 20;
+        else
+            range = 30;
 
         if (transform.GetChild(0).GetComponent<Animator>())
             animator = transform.GetChild(0).GetComponent<Animator>();
@@ -77,7 +78,6 @@ public class TurretAI : MonoBehaviour
         }
         monsters = playerC.monsters;
 
-        float range;
         float dist = float.MaxValue;
         foreach (GameObject monster in monsters)
         {
@@ -92,13 +92,6 @@ public class TurretAI : MonoBehaviour
                 dist = targetDist;
             }
         }
-
-        if (turretType == TurretType.Single)
-            range = cannonRange;
-        else if (turretType == TurretType.Dual)
-            range = missleRange;
-        else
-            range = catapultRange;
 
         if (currentTarget != null && dist <= range)
             FollowTarget();
@@ -200,6 +193,17 @@ public class TurretAI : MonoBehaviour
             Projectile projectile = missleGo.GetComponent<Projectile>();
             projectile.target = lockOnPos;
         }
+
+        else if (turretType == TurretType.Mortor)
+        {
+            lockOnPos = go.transform;
+
+            Instantiate(muzzleEff, muzzleMain.transform.position, muzzleMain.rotation);
+            GameObject missleGo = Instantiate(bullet, muzzleMain.transform.position, muzzleMain.rotation);
+            Projectile projectile = missleGo.GetComponent<Projectile>();
+            projectile.target = lockOnPos;
+        }
+
         else if(turretType == TurretType.Dual)
         {
             if (shootLeft)
@@ -219,6 +223,7 @@ public class TurretAI : MonoBehaviour
 
             shootLeft = !shootLeft;
         }
+
         else
         {
             Instantiate(muzzleEff, muzzleMain.transform.position, muzzleMain.rotation);

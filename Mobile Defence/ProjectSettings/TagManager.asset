@@ -11,6 +11,7 @@ TagManager:
   - MissleBullet
   - GunBullet
   - MissleBullet2
+  - MortorBullet
   layers:
   - Default
   - TransparentFX

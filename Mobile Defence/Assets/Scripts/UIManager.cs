@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -15,12 +16,44 @@ public class UIManager : MonoBehaviour
     public GameObject goldIm;
     public Text lifeUI;
     public Text goldUI;
+    public GameObject gameOver;
+    public Text scoreTxt;
 
     public GameManager gameM;
 
     private void Start()
     {
         rdStart.SetActive(false);
+        gameOver.SetActive(false);
+    }
+
+    private void Update()
+    {
+        GameOverUI();
+    }
+
+    private void GameOverScore()
+    {
+        if (gameM.gameOver)
+            scoreTxt.text = string.Format($"{gameM.round} Round");
+    }
+
+    private void GameOverUI()
+    {
+        if (gameM.gameOver)
+            gameOver.SetActive(true);
+        GameOverScore();
+    }
+    public void RestartGame()
+    {
+        gameOver.SetActive(false);
+        SceneManager.LoadScene("Play");
+    }
+
+    public void QuitGame()
+    {
+        gameOver.SetActive(false);
+        SceneManager.LoadScene("Menu");
     }
 
     public void WaitingTimeUI(float remainingTime)

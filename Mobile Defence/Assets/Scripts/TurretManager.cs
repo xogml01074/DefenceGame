@@ -6,6 +6,7 @@ using UnityEngine;
 public class TurretManager : MonoBehaviour
 {
     public TurretUi tU;
+    public GameManager gameM;
     public GameObject canvas;
     public Animator anim;
 
@@ -55,32 +56,67 @@ public class TurretManager : MonoBehaviour
 
     public void CannonCreate()
     {
-        Destroy(Instantiate(effect, spawnP + new Vector3(-1, 1.5f, 1), Quaternion.identity), 3f);
-        Instantiate(cannon, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
-        tU.ExitClickButton();
+        if (gameM.gold < 15)
+            return;
+
+        if (gameM.gold >= 15)
+        {
+            gameM.gold -= 15;
+            Destroy(Instantiate(effect, spawnP + new Vector3(-1, 1.5f, 1), Quaternion.identity), 3f);
+            Instantiate(cannon, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
+            tU.ExitClickButton();
+        }
     }
     public void Missle1Create()
     {
-        Destroy(Instantiate(effect, spawnP + new Vector3(-1, 1.5f, 1), Quaternion.identity), 3f);
-        Instantiate(missle1, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
-        tU.ExitClickButton();
+        if (gameM.gold < 25)
+            return;
+
+        if (gameM.gold >= 25)
+        {
+            gameM.gold -= 25;
+            Destroy(Instantiate(effect, spawnP + new Vector3(-1, 1.5f, 1), Quaternion.identity), 3f);
+            Instantiate(missle1, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
+            tU.ExitClickButton();
+        }
     }
     public void Missle2Create()
     {
-        Destroy(Instantiate(effect, spawnP + new Vector3(-1, 1.5f, 1), Quaternion.identity), 3f);
-        Instantiate(missle2, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
-        tU.ExitClickButton();
+        if (gameM.gold < 45)
+            return;
+
+        if (gameM.gold >= 45)
+        {
+            gameM.gold -= 45;
+            Destroy(Instantiate(effect, spawnP + new Vector3(-1, 1.5f, 1), Quaternion.identity), 3f);
+            Instantiate(missle2, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
+            tU.ExitClickButton();
+        }
     }
     public void CatapultCreate()
     {
-        Destroy(Instantiate(effect, spawnP + new Vector3(-1, 1.5f, 1), Quaternion.identity), 3f);
-        Instantiate(catapult, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
-        tU.ExitClickButton();
+        if (gameM.gold < 60)
+            return;
+
+        if (gameM.gold >= 60)
+        {
+            gameM.gold -= 60;
+            Destroy(Instantiate(effect, spawnP + new Vector3(-1, 1.5f, 1), Quaternion.identity), 3f);
+            Instantiate(catapult, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
+            tU.ExitClickButton();
+        }
     }
     public void MortorCreate()
     {
-        Destroy(Instantiate(effect, spawnP + new Vector3(-1, 1.5f, 1), Quaternion.identity), 3f);
-        Instantiate(mortor, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
-        tU.ExitClickButton();
+        if (gameM.gold < 100)
+            return;
+
+        if (gameM.gold >= 100)
+        {
+            gameM.gold -= 100;
+            Destroy(Instantiate(effect, spawnP + new Vector3(-1, 1.5f, 1), Quaternion.identity), 3f);
+            Instantiate(mortor, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
+            tU.ExitClickButton();
+        }
     }
 }

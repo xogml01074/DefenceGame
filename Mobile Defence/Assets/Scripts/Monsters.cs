@@ -129,7 +129,7 @@ public class Monsters : MonoBehaviour
         else if (other.gameObject.CompareTag("MissleBullet"))
             MissleHurt();
 
-        else if (other.gameObject.CompareTag("Missle2Bullet"))
+        else if (other.gameObject.CompareTag("MissleBullet2"))
             Missle2Hurt();
 
         else if (other.gameObject.CompareTag("CatapultBullet"))

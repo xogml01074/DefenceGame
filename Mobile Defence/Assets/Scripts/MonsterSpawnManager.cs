@@ -23,7 +23,7 @@ public class MonsterSpawnManager : MonoBehaviour
 
     public void MonsterSpawn()
     {
-        if (!gameM.roundStart && monsterLimit > 0)
+        if (!gameM.roundStart && monsterLimit > 0 || gameM.gameOver)
             return;
 
         if (currentLimit < monsterLimit)
