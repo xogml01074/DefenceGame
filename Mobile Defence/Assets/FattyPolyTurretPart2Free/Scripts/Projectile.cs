@@ -8,16 +8,13 @@ public class Projectile : MonoBehaviour {
     public Transform target;
     public bool cLockOn;
     public bool mLockOn;
-    //public bool track;
+
     public float speed = 1;
     public float turnSpeed = 1;
     public bool catapult;
     public bool mortor;
 
-    public float knockBack = 0.1f;
-    public float boomTimer = 1;
-    //public Vector3 _startPosition;
-    //public float dist;
+    public float knockBack = 0.2f;
 
     public ParticleSystem explosion;
 
@@ -43,13 +40,7 @@ public class Projectile : MonoBehaviour {
             return;
         }
 
-        if (transform.position.y <= 1.5f)
-        {
-            Explosion();
-        }
-
-        boomTimer -= Time.deltaTime;
-        if (boomTimer <= 0)
+        if (transform.position.y <= 1.7f)
         {
             Explosion();
         }
@@ -58,7 +49,7 @@ public class Projectile : MonoBehaviour {
         {
             if (cLockOn)
             {
-                Vector3 Vo = CalculateCatapult(target.transform.position, transform.position, 1);
+                Vector3 Vo = CalculateCatapultAndMortor(target.transform.position, transform.position, 1);
 
                 transform.GetComponent<Rigidbody>().velocity = Vo;
                 cLockOn = false;
@@ -68,7 +59,7 @@ public class Projectile : MonoBehaviour {
         {
             if (mLockOn)
             {
-                Vector3 Vo = CalculateMortor(target.transform.position, transform.position, 0.5f);
+                Vector3 Vo = CalculateCatapultAndMortor(target.transform.position, transform.position, 1.4f);
 
                 transform.GetComponent<Rigidbody>().velocity = Vo;
                 mLockOn = false;
@@ -90,26 +81,8 @@ public class Projectile : MonoBehaviour {
             transform.Translate(transform.forward * singleSpeed * 2, Space.World);
         }
     }
-    Vector3 CalculateMortor(Vector3 target, Vector3 origen, float time)
-    {
-        Vector3 distance = target - origen;
-        Vector3 distanceXZ = distance;
-        distanceXZ.y = 0;
 
-        float Sy = distance.y;
-        float Sxz = distanceXZ.magnitude;
-
-        float Vxz = Sxz / time;
-        float Vy = Sy / time + 0.5f * Mathf.Abs(Physics.gravity.y) * time;
-
-        Vector3 result = distanceXZ.normalized;
-        result *= Vxz;
-        result.y = Vy;
-
-        return result;
-    } 
-
-    Vector3 CalculateCatapult(Vector3 target, Vector3 origen, float time)
+    Vector3 CalculateCatapultAndMortor(Vector3 target, Vector3 origen, float time)
     {
         Vector3 distance = target - origen;
         Vector3 distanceXZ = distance;
@@ -130,7 +103,7 @@ public class Projectile : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.tag == "Monster")
+        if (other.transform.tag != "Player")
             Explosion();
     }
 

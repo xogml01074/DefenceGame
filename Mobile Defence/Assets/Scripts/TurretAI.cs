@@ -18,8 +18,6 @@ public class TurretAI : MonoBehaviour
     public GameObject currentTarget;
     public Transform turreyHead;
 
-    public float attackDist = 10.0f;
-
     public float range;
     public float shootCoolDown;
     private float timer;
@@ -95,6 +93,7 @@ public class TurretAI : MonoBehaviour
 
         if (currentTarget != null && dist <= range)
             FollowTarget();
+
         else
             IdleRotate();
     }
@@ -107,7 +106,7 @@ public class TurretAI : MonoBehaviour
         Vector3 targetDir = currentTarget.transform.position - turreyHead.position;
         targetDir.y = 0;
 
-        if (turretType == TurretType.Single)
+        if (turretType == TurretType.Single || turretType == TurretType.Catapult)
             turreyHead.forward = targetDir;
 
         else
@@ -131,30 +130,11 @@ public class TurretAI : MonoBehaviour
     {
         Shoot(currentTarget);
     }
-    
-    Vector3 CalculateVelocity(Vector3 target, Vector3 origen, float time)
-    {
-        Vector3 distance = target - origen;
-        Vector3 distanceXZ = distance;
-        distanceXZ.y = 0;
-
-        float Sy = distance.y;
-        float Sxz = distanceXZ.magnitude;
-
-        float Vxz = Sxz / time;
-        float Vy = Sy / time + 0.5f * Mathf.Abs(Physics.gravity.y) * time;
-
-        Vector3 result = distanceXZ.normalized;
-        result *= Vxz;
-        result.y = Vy;
-
-        return result;
-    }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackDist);
+        Gizmos.DrawWireSphere(transform.position, range);
     }
 
     public void IdleRotate()

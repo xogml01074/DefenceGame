@@ -8,7 +8,8 @@ public enum PlayerState
 {
     Idle,
     Move,
-    SlowMove,
+    GrassMove,
+    WaterMove,
     Attack,
 }
 
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
 
     public Transform grassCheckTransform;
     public LayerMask grassCheckLayerMask;
+    public LayerMask waterCheckLayerMask;
 
     public Animator animator;
     public GameManager gameM;
@@ -59,7 +61,7 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(moveDirection);
             transform.position += movement;
 
-            UpdateColliderGrassStatus();
+            UpdateCollider();
         }
         else
         {
@@ -68,24 +70,37 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void UpdateColliderGrassStatus()
+    private void UpdateCollider()
     {
         // 플레이어 밑에 가상의 박스와 부딪히는 Ground 레이어 체크후 부딪히는 레이어의 개 수 반환
-        Collider[] hitColliders =
-            Physics.OverlapBox(grassCheckTransform.position, new Vector3(0.3f, 0.2f, 0.3f), Quaternion.identity, grassCheckLayerMask);
+        Collider[] grassCol =
+            Physics.OverlapBox(grassCheckTransform.position, new Vector3(0.2f, 0.2f, 0.2f), Quaternion.identity, grassCheckLayerMask);
 
-        if (hitColliders.Length > 0)
+        Collider[] waterCol =
+            Physics.OverlapBox(grassCheckTransform.position , new Vector3(0.2f, 0.3f, 0.2f), Quaternion.identity, waterCheckLayerMask);
+
+        if (waterCol.Length > 0)
         {
-            playerState = PlayerState.SlowMove;
+            playerState = PlayerState.WaterMove;
+            moveSpeed = 1.5f;
+            animator.SetBool("playerOnWater", true);
+            animator.SetBool("playerOnGround", false);
+        }
+        else if (grassCol.Length > 0)
+        {
+            playerState = PlayerState.GrassMove;
             moveSpeed = 3;
             animator.SetBool("playerOnGround", true);
+            animator.SetBool("playerOnWater", false);
         }
         else
         {
             playerState = PlayerState.Move;
             moveSpeed = 6;
             animator.SetBool("playerOnGround", false);
+            animator.SetBool("playerOnWater", false);
         }
+
     }
 
     // 가장 가까운 적 타게팅 
