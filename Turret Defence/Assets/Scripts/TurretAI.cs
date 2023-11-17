@@ -50,9 +50,9 @@ public class TurretAI : MonoBehaviour
         else if (turretType == TurretType.Dual)
             range = 7;
         else if (turretType == TurretType.Catapult)
-            range = 20;
+            range = 15;
         else
-            range = 30;
+            range = 40;
 
         if (transform.GetChild(0).GetComponent<Animator>())
             animator = transform.GetChild(0).GetComponent<Animator>();

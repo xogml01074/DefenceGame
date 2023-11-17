@@ -135,13 +135,13 @@ public class Monsters : MonoBehaviour
         else if (other.gameObject.CompareTag("CatapultBullet"))
             CatapultHurt();
 
-        //if (other.gameObject.CompareTag("MortorBullet"))
-        //    MortorHurt();
+        if (other.gameObject.CompareTag("MortorBullet"))
+            MortorHurt();
     }
 
     public void MortorHurt()
     {
-        //currentHp -= turretM.mortorDamage;
+        currentHp -= turretM.mortorDamage;
     }
 
     public void CannonHurt()

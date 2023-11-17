@@ -22,6 +22,7 @@ public class TurretManager : MonoBehaviour
     public float missleDamage = 10;
     public float missle2Damage = 7;
     public float catapultDamage = 30;
+    public float mortorDamage = 50;
 
     public Vector3 spawnP;
     Vector3 mousePos;

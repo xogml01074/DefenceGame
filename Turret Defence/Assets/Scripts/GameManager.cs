@@ -117,7 +117,6 @@ public class GameManager : MonoBehaviour
 
         if (playerLife == 0)
         {
-            Debug.Log("Game Over"); // 게임오버시 나오는 재시작 또는 메뉴화면으로 이동 UI
             gameOver = true;
             roundStart = false;
             playerLive = false;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour {
 
-    public TurretAI.TurretType type = TurretAI.TurretType.Single;
+    public TurretAI.TurretType type;
     public Transform target;
     public bool cLockOn;
     public bool mLockOn;
@@ -34,16 +34,16 @@ public class Projectile : MonoBehaviour {
 
     private void Update()
     {
-        if (target == null)
+        if (type != TurretAI.TurretType.Mortor && type != TurretAI.TurretType.Catapult)
         {
-            Explosion();
-            return;
+            if (target == null)
+            {
+                Explosion();
+                return;
+            }
         }
-
-        if (transform.position.y <= 1.7f)
-        {
+        if (transform.position.y <= 2f)
             Explosion();
-        }
 
         if (type == TurretAI.TurretType.Catapult)
         {
@@ -59,7 +59,7 @@ public class Projectile : MonoBehaviour {
         {
             if (mLockOn)
             {
-                Vector3 Vo = CalculateCatapultAndMortor(target.transform.position, transform.position, 1.4f);
+                Vector3 Vo = CalculateCatapultAndMortor(target.transform.position, transform.position, 1.2f);
 
                 transform.GetComponent<Rigidbody>().velocity = Vo;
                 mLockOn = false;
@@ -103,7 +103,9 @@ public class Projectile : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.tag != "Player")
+        if (type != TurretAI.TurretType.Mortor && type != TurretAI.TurretType.Catapult)
+            Explosion();
+        else if (other.gameObject == CompareTag("Map"))
             Explosion();
     }
 
