@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -8,6 +9,8 @@ public class BossMonsterAI : MonoBehaviour
 {
     private PlayerController playerC;
     private GameManager gameM;
+    private TurretManager turretM;
+    private MonsterSpawnManager monsterSM;
 
     private NavMeshAgent agent;
     private GameObject target;
@@ -15,14 +18,18 @@ public class BossMonsterAI : MonoBehaviour
     public Slider hpBar;
     public float maxHp;
     public float currentHp;
-    private bool bossDead = false;
+
 
     private void Start()
     {
+        monsterSM = GameObject.Find("MonsterSpawnManager").GetComponent<MonsterSpawnManager>();
+        monsterSM.bossLive = true;
+
         target = GameObject.Find("Player");
         playerC = target.GetComponent<PlayerController>();
         playerC.monsters.Add(gameObject);
-        
+
+        turretM = GameObject.Find("TurretManager").GetComponent<TurretManager>();
         gameM = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         agent = GetComponent<NavMeshAgent>();
@@ -33,12 +40,16 @@ public class BossMonsterAI : MonoBehaviour
 
     private void Update()
     {
+        BossDead();
         FindTarget();
         SetBossHpBar();
     }
 
     private void FindTarget()
     {
+        if (!monsterSM.bossLive)
+            return;
+
         agent.SetDestination(target.transform.position);
     }
 
@@ -49,7 +60,51 @@ public class BossMonsterAI : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == CompareTag("Bullet"))
-            currentHp -= playerC.shotDamage;
+        if (other.gameObject.CompareTag("GunBullet"))
+            currentHp -= playerC.shotDamage * 1.5f;
+
+        else if (other.gameObject.CompareTag("MissleBullet"))
+            MissleHurt();
+
+        else if (other.gameObject.CompareTag("MissleBullet2"))
+            Missle2Hurt();
+
+        else if (other.gameObject.CompareTag("CannonBullet"))
+            CannonHurt();
+    }
+
+    public void MortorHurt()
+    {
+        currentHp -= turretM.mortorDamage;
+    }
+
+    public void CannonHurt()
+    {
+        currentHp -= turretM.cannonDamage / 2;
+    }
+
+    public void MissleHurt()
+    {
+        currentHp -= turretM.missleDamage / 2;
+    }
+
+    public void Missle2Hurt()
+    {
+        currentHp -= turretM.missle2Damage / 2;
+    }
+
+    public void CatapultHurt()
+    {
+        currentHp -= turretM.catapultDamage;
+    }
+
+    private void BossDead()
+    {
+        if(currentHp <= 0)
+        {   
+            monsterSM.bossCount = 1;
+            monsterSM.bossLive = false;
+            Destroy(gameObject);
+        }
     }
 }

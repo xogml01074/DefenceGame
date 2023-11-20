@@ -280,7 +280,7 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   turreyHead: {fileID: 4940591295711036}
   range: 0
-  shootCoolDown: 3
+  shootCoolDown: 5
   loockSpeed: 40
   layerMask:
     serializedVersion: 2

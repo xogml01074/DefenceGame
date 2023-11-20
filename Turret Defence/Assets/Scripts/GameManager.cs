@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
         RoundStart();
 
         monsterSM.MonsterSpawn();
+        monsterSM.BossMonsterSpawn();
     }
 
     public void RoundStart()
@@ -83,15 +84,6 @@ public class GameManager : MonoBehaviour
             monsterCount = monsterSM.monsterLimit;
             round++;
             remainingTime = 20.5f;
-
-            if (!(round % 10 == 0) && round < 40)
-            {
-                // monsterSM.Round40DownMonsterPower()
-            }
-            else if (!(round % 10 == 0) && round > 40)
-            {
-                // monsterSM.Round40UPMonsterPower()
-            }
         }
     }
 
@@ -101,7 +93,15 @@ public class GameManager : MonoBehaviour
         if (!playerLive)
             return;
 
-        if (remainingTime > 0 && monsterCount == 0)
+        if (remainingTime > 0 && round % 10 == 0 && (!monsterSM.bossLive))
+        {
+            monsterSM.currentLimit = 0;
+            playerC.monsters.Clear();
+            remainingTime -= Time.deltaTime;
+            roundStart = false;
+        }
+
+        else if (remainingTime > 0 && monsterCount == 0)
         {
             monsterSM.currentLimit = 0;
             playerC.monsters.Clear();

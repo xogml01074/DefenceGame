@@ -10,6 +10,10 @@ public class MonsterSpawnManager : MonoBehaviour
     public Vector3 monsterSpawnPoint3;
     public Vector3 monsterSpawnPoint4;
 
+    public GameObject boss;
+    public int bossCount = 1;
+    public bool bossLive = false;
+    public Transform[] bossSpawnPs;
     public GameObject monsters;
     public int monsterLimit = 5;
     public int currentLimit;
@@ -29,7 +33,7 @@ public class MonsterSpawnManager : MonoBehaviour
         if (currentLimit < monsterLimit)
             monsterSpawnTime -= Time.deltaTime;
 
-        if (monsterSpawnTime <= 0)
+        if (monsterSpawnTime <= 0 && gameM.round % 10 != 0)
         {
             if (r1Limit > 0)
             {
@@ -59,30 +63,15 @@ public class MonsterSpawnManager : MonoBehaviour
         }
     }
 
-    // 라운드 40 이전 몬스터 체력 및 이동속도 
-    public void Round40DownMonsterPower()
-    {
-        if (gameM.round < 10)
-        {
-
-        }
-        // 몬스터 종류는 기본, 스피드업, 체력업, 보스는 체력과 둔화
-
-        // 5 라운드 마다 몬스터 체력강화 + 이동속도 강화
-        // 10 라운드 마다 스폰 포인트 추가 생성
-    }
-
-    // 라운드 40 이후 몬스터 체력 및 이동속도
-    public void Round40UpMonsterPower()
-    {
-        // 매 라운드 마다 몬스터 체력 증가 이동속도는 증가하지 않음
-    }
-
-    // 보스 몬스터 체력 및 이동속도
-    public void BossMonsterPower()
+    public void BossMonsterSpawn()
     {
         // 보스는 여러종류를 목표로 하지만 중간프로젝트엔 한 종류로 할 예정
         // 10라운드 마다 보스 몬스터 소환
-        // 보스 몬스터는 체력만 증가
+        if (gameM.roundStart && gameM.round % 10 == 0 && bossCount == 1)
+        {
+            bossCount--;
+            int rdIdx = Random.Range(0, 2);
+            Instantiate(boss, bossSpawnPs[rdIdx].position, Quaternion.identity);
+        }
     }
 }

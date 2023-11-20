@@ -38,7 +38,6 @@ public class TurretAI : MonoBehaviour
     private bool shootLeft = true;
 
     private Transform lockOnPos;
-    //public TurretShoot_Base shotScript;
 
     void Start () 
     {
@@ -52,7 +51,7 @@ public class TurretAI : MonoBehaviour
         else if (turretType == TurretType.Catapult)
             range = 15;
         else
-            range = 40;
+            range = 30;
 
         if (transform.GetChild(0).GetComponent<Animator>())
             animator = transform.GetChild(0).GetComponent<Animator>();
@@ -106,7 +105,7 @@ public class TurretAI : MonoBehaviour
         Vector3 targetDir = currentTarget.transform.position - turreyHead.position;
         targetDir.y = 0;
 
-        if (turretType == TurretType.Single || turretType == TurretType.Catapult)
+        if (turretType == TurretType.Single || turretType == TurretType.Catapult || turretType == TurretType.Mortor)
             turreyHead.forward = targetDir;
 
         else

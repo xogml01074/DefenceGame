@@ -58,7 +58,7 @@ public class Monsters : MonoBehaviour
         SpawnPoint(transform.position);
 
         monsterSpeed = 1.5f;
-        maxHp = gameM.round * 4;
+        maxHp = gameM.round * 4f;
         currentHp = maxHp;
         monsterDead = false;
 
@@ -132,11 +132,11 @@ public class Monsters : MonoBehaviour
         else if (other.gameObject.CompareTag("MissleBullet2"))
             Missle2Hurt();
 
-        else if (other.gameObject.CompareTag("CatapultBullet"))
-            CatapultHurt();
+        //else if (other.gameObject.CompareTag("CatapultBullet"))
+        //    CatapultHurt();
 
-        if (other.gameObject.CompareTag("MortorBullet"))
-            MortorHurt();
+        //else if (other.gameObject.CompareTag("MortorBullet"))
+        //    MortorHurt();
     }
 
     public void MortorHurt()

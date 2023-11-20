@@ -176,4 +176,11 @@ public class PlayerController : MonoBehaviour
         Instantiate(bullet, firePos.position, Quaternion.LookRotation(dir));
         playerState = PlayerState.Idle;
     }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("BossMonster"))
+            gameM.playerLife -= 2;
+    }
 }

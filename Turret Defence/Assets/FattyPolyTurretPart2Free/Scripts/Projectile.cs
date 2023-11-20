@@ -13,6 +13,7 @@ public class Projectile : MonoBehaviour {
     public float turnSpeed = 1;
     public bool catapult;
     public bool mortor;
+    public LayerMask monster;
 
     public float knockBack = 0.2f;
 
@@ -27,6 +28,9 @@ public class Projectile : MonoBehaviour {
 
         if (type == TurretAI.TurretType.Single)
         {
+            if (!target)
+                return;
+
             Vector3 dir = target.position - transform.position;
             transform.rotation = Quaternion.LookRotation(dir);
         }
@@ -34,14 +38,12 @@ public class Projectile : MonoBehaviour {
 
     private void Update()
     {
-        if (type != TurretAI.TurretType.Mortor && type != TurretAI.TurretType.Catapult)
+        if (!target)
         {
-            if (target == null)
-            {
-                Explosion();
-                return;
-            }
+            Explosion();
+            return;
         }
+
         if (transform.position.y <= 2f)
             Explosion();
 
@@ -49,6 +51,9 @@ public class Projectile : MonoBehaviour {
         {
             if (cLockOn)
             {
+                if (!target)
+                    return;
+
                 Vector3 Vo = CalculateCatapultAndMortor(target.transform.position, transform.position, 1);
 
                 transform.GetComponent<Rigidbody>().velocity = Vo;
@@ -59,7 +64,10 @@ public class Projectile : MonoBehaviour {
         {
             if (mLockOn)
             {
-                Vector3 Vo = CalculateCatapultAndMortor(target.transform.position, transform.position, 1.2f);
+                if (!target)
+                    return;
+
+                Vector3 Vo = CalculateCatapultAndMortor(target.transform.position, transform.position, 1.3f);
 
                 transform.GetComponent<Rigidbody>().velocity = Vo;
                 mLockOn = false;
@@ -67,6 +75,9 @@ public class Projectile : MonoBehaviour {
         }
         else if(type == TurretAI.TurretType.Dual)
         {
+            if (!target)
+                return;
+
             Vector3 dir = target.position - transform.position;
             Vector3 newDirection = Vector3.RotateTowards(transform.forward, dir, Time.deltaTime * turnSpeed, 0.0f);
             Debug.DrawRay(transform.position, newDirection, Color.red);
@@ -77,6 +88,9 @@ public class Projectile : MonoBehaviour {
         }
         else if (type == TurretAI.TurretType.Single)
         {
+            if (!target)
+                return;
+
             float singleSpeed = speed * Time.deltaTime;
             transform.Translate(transform.forward * singleSpeed * 2, Space.World);
         }
@@ -103,15 +117,40 @@ public class Projectile : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (type != TurretAI.TurretType.Mortor && type != TurretAI.TurretType.Catapult)
-            Explosion();
-        else if (other.gameObject == CompareTag("Map"))
-            Explosion();
+        if (other.gameObject.name == "Player")
+            return;
+
+        Explosion();
     }
 
     public void Explosion()
     {
         Instantiate(explosion, transform.position, transform.rotation);
+        if (type == TurretAI.TurretType.Mortor)
+        {
+            Collider[] colls2 = Physics.OverlapSphere(gameObject.transform.position, 4f);
+            foreach (Collider coll in colls2)
+            {
+                if (coll.gameObject.tag == "Monster")
+                    coll.gameObject.GetComponent<Monsters>().MortorHurt();
+
+                else if (coll.gameObject.tag == "BossMonster")
+                    coll.gameObject.GetComponent<BossMonsterAI>().MortorHurt();
+            }
+        }
+
+        else if (type == TurretAI.TurretType.Catapult)
+        {
+            Collider[] colls1 = Physics.OverlapSphere(gameObject.transform.position, 2f);
+            foreach (Collider coll in colls1)
+            {
+                if (coll.gameObject.tag == "Monster")
+                    coll.gameObject.GetComponent<Monsters>().CatapultHurt();
+
+                else if (coll.gameObject.tag == "BossMonster")
+                    coll.gameObject.GetComponent<BossMonsterAI>().CatapultHurt();
+            }
+        }
         Destroy(gameObject);
     }
 }
