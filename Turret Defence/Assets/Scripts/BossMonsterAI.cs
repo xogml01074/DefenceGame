@@ -75,12 +75,12 @@ public class BossMonsterAI : MonoBehaviour
 
     public void MortorHurt()
     {
-        currentHp -= turretM.mortorDamage;
+        currentHp -= turretM.mortorDamage / 4;
     }
 
     public void CannonHurt()
     {
-        currentHp -= turretM.cannonDamage / 2;
+        currentHp -= turretM.cannonDamage;
     }
 
     public void MissleHurt()
@@ -95,13 +95,14 @@ public class BossMonsterAI : MonoBehaviour
 
     public void CatapultHurt()
     {
-        currentHp -= turretM.catapultDamage;
+        currentHp -= turretM.catapultDamage / 4;
     }
 
     private void BossDead()
     {
         if(currentHp <= 0)
-        {   
+        {
+            gameM.gold += 100;
             monsterSM.bossCount = 1;
             monsterSM.bossLive = false;
             Destroy(gameObject);

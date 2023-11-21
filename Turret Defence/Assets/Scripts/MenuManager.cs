@@ -7,6 +7,11 @@ public class MenuManager : MonoBehaviour
 {
     public void StartButton()
     {
+        Invoke(nameof(LoadScene), 1f);
+    }
+
+    private void LoadScene()
+    {
         SceneManager.LoadScene("Play");
     }
 

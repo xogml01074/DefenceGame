@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour
         if (!playerLive)
             return;
 
-        if (playerLife == 0)
+        if (playerLife <= 0)
         {
             gameOver = true;
             roundStart = false;

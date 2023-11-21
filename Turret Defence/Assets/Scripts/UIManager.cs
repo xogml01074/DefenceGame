@@ -83,7 +83,11 @@ public class UIManager : MonoBehaviour
         {
             rgTime.SetActive(false);
             rdStart.SetActive(true);
-            roundStartUI.text = $"{round}라운드";
+            if (gameM.round % 10 != 0)
+                roundStartUI.text = $"{round}라운드";
+            else
+                roundStartUI.text = $"보스 라운드";
+
         }
     }
 

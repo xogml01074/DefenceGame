@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5317823180929767851}
   - component: {fileID: -633386148279413364}
   - component: {fileID: 9077024254968939184}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bullet_Mortor
   m_TagString: MortorBullet
   m_Icon: {fileID: 0}

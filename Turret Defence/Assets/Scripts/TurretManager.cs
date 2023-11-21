@@ -29,6 +29,9 @@ public class TurretManager : MonoBehaviour
 
     private void Update()
     {
+        if (gameM.gameOver)
+            return;
+
         TurretCreatePointClick();
     }
 

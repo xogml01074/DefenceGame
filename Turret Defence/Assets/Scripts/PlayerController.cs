@@ -38,6 +38,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (gameM.gameOver)
+            return;
+
         Attack();
         PlayerMove();
         MonsterTarget();
