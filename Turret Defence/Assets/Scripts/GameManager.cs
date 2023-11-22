@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public bool roundStart = false;
     public bool gameOver = false;
 
+    public int killScore = 0;
+
     public int gold;
 
     public int monsterCount;
@@ -118,6 +120,9 @@ public class GameManager : MonoBehaviour
         if (playerLife <= 0)
         {
             gameOver = true;
+            PlayerPrefs.SetInt("TotalRound", round);
+            PlayerPrefs.SetInt("TotalKill", killScore);
+            PlayerPrefs.Save();
             roundStart = false;
             playerLive = false;
         }

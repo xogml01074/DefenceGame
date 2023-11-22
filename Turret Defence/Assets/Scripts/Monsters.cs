@@ -181,6 +181,7 @@ public void GunHurt()
         {
             soundM.MonsterDeadSound();
             gameM.gold++;
+            gameM.killScore++;
             gameM.monsterCount--;
             Destroy(gameObject);
         }

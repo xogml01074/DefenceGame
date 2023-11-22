@@ -35,7 +35,8 @@ public class UIManager : MonoBehaviour
     private void GameOverScore()
     {
         if (gameM.gameOver)
-            scoreTxt.text = string.Format($"{gameM.round} Round");
+            scoreTxt.text = string.Format($"Round : {gameM.round}\n" +
+                                          $"Kill : {gameM.killScore}");
     }
 
     private void GameOverUI()
