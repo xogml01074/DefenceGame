@@ -127,6 +127,9 @@ public class TurretAI : MonoBehaviour
 
     private void ShootTrigger()
     {
+        if (currentTarget == null)
+            return;
+
         Shoot(currentTarget);
     }
 

@@ -25,15 +25,6 @@ public class Projectile : MonoBehaviour {
             cLockOn = true;
         if (mortor)
             mLockOn = true;
-
-        if (type == TurretAI.TurretType.Single)
-        {
-            if (!target)
-                return;
-
-            Vector3 dir = target.position - transform.position;
-            transform.rotation = Quaternion.LookRotation(dir);
-        }
     }
 
     private void Update()

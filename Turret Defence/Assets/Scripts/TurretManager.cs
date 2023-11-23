@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
+using static TowerSpawnTorF;
 
 public class TurretManager : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class TurretManager : MonoBehaviour
 
     public Vector3 spawnP;
     Vector3 mousePos;
+    GameObject hg;
 
     private void Update()
     {
@@ -46,13 +48,17 @@ public class TurretManager : MonoBehaviour
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
-            {
+            {                
                 if (hit.collider.name == "Tile_StoneV1")
                 {
-                    if (spawnP == new Vector3(0, 0, 0))
-                        spawnP = hit.collider.transform.position;
+                    hg = hit.transform.gameObject;
+                    if (hg.GetComponent<TowerSpawnTorF>().ts == TowerSpawnState.tsTrue)
+                    {                       
+                        if (spawnP == new Vector3(0, 0, 0))
+                            spawnP = hit.collider.transform.position;
 
-                    canvas.SetActive(true); // 타워종류 UI 만든 후 나오게 만들고 클릭시 그 타워 생성
+                        canvas.SetActive(true); // 타워종류 UI 만든 후 나오게 만들고 클릭시 그 타워 생성
+                    }
                 }
             }
         }
@@ -70,6 +76,7 @@ public class TurretManager : MonoBehaviour
             Instantiate(cannon, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
             tU.ExitClickButton();
         }
+        hg.GetComponent<TowerSpawnTorF>().ts = TowerSpawnState.tsFalse;
     }
     public void Missle1Create()
     {
@@ -83,6 +90,7 @@ public class TurretManager : MonoBehaviour
             Instantiate(missle1, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
             tU.ExitClickButton();
         }
+        hg.GetComponent<TowerSpawnTorF>().ts = TowerSpawnState.tsFalse;
     }
     public void Missle2Create()
     {
@@ -96,6 +104,7 @@ public class TurretManager : MonoBehaviour
             Instantiate(missle2, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
             tU.ExitClickButton();
         }
+        hg.GetComponent<TowerSpawnTorF>().ts = TowerSpawnState.tsFalse;
     }
     public void CatapultCreate()
     {
@@ -108,6 +117,7 @@ public class TurretManager : MonoBehaviour
             Destroy(Instantiate(effect, spawnP + new Vector3(-1, 1.5f, 1), Quaternion.identity), 3f);
             Instantiate(catapult, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
             tU.ExitClickButton();
+            hg.GetComponent<TowerSpawnTorF>().ts = TowerSpawnState.tsFalse;
         }
     }
     public void MortorCreate()
@@ -121,6 +131,7 @@ public class TurretManager : MonoBehaviour
             Destroy(Instantiate(effect, spawnP + new Vector3(-1, 1.5f, 1), Quaternion.identity), 3f);
             Instantiate(mortor, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
             tU.ExitClickButton();
+            hg.GetComponent<TowerSpawnTorF>().ts = TowerSpawnState.tsFalse;
         }
     }
 }

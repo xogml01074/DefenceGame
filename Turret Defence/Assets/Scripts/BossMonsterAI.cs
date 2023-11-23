@@ -34,7 +34,7 @@ public class BossMonsterAI : MonoBehaviour
 
         agent = GetComponent<NavMeshAgent>();
 
-        maxHp = gameM.round * 20;
+        maxHp = gameM.round * 25;
         currentHp = maxHp;
     }
 

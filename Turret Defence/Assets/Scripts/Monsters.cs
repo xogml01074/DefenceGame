@@ -58,7 +58,7 @@ public class Monsters : MonoBehaviour
         SpawnPoint(transform.position);
 
         monsterSpeed = 1.5f;
-        maxHp = gameM.round * 4f;
+        maxHp = gameM.round * 4.5f;
         currentHp = maxHp;
         monsterDead = false;
 
@@ -94,7 +94,7 @@ public class Monsters : MonoBehaviour
         if (!monsterDead)
         {
             // 몬스터가 다음 웨이포인트 까지 도달하지 못했을시 웨이포인트 위치까지 이동
-            if (Vector3.Distance(transform.position, road[dstIdx].position) >= 0.01f)
+            if (Vector3.Distance(transform.position, road[dstIdx].position) >= 0.1f)
             {
                 transform.LookAt(road[dstIdx].position);
                 transform.Translate(Vector3.forward * monsterSpeed * Time.deltaTime);
@@ -131,12 +131,6 @@ public class Monsters : MonoBehaviour
 
         else if (other.gameObject.CompareTag("MissleBullet2"))
             Missle2Hurt();
-
-        //else if (other.gameObject.CompareTag("CatapultBullet"))
-        //    CatapultHurt();
-
-        //else if (other.gameObject.CompareTag("MortorBullet"))
-        //    MortorHurt();
     }
 
     public void MortorHurt()
@@ -164,9 +158,19 @@ public class Monsters : MonoBehaviour
         currentHp -= turretM.catapultDamage;
     }
 
-public void GunHurt()
+    public void GunHurt()
     {
+        StartCoroutine(SlowMove());
         currentHp -= playerC.shotDamage;
+    }
+
+    IEnumerator SlowMove()
+    {
+        monsterSpeed = 1f;
+
+        yield return new WaitForSeconds(5f);
+
+        monsterSpeed = 1.5f;
     }
 
     private void MonsterHpBar()

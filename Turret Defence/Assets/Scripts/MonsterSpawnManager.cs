@@ -70,7 +70,7 @@ public class MonsterSpawnManager : MonoBehaviour
         if (gameM.roundStart && gameM.round % 10 == 0 && bossCount == 1)
         {
             bossCount--;
-            int rdIdx = Random.Range(0, 2);
+            int rdIdx = Random.Range(0, 3);
             Instantiate(boss, bossSpawnPs[rdIdx].position, Quaternion.identity);
         }
     }

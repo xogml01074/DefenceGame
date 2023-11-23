@@ -19,8 +19,8 @@ public class PlayerController : MonoBehaviour
 
     public FixedJoystick joystick;
     public float moveSpeed = 6;
-    public float shotRange = 4;
-    public float shotDamage = 4;
+    public float shotRange = 5;
+    public float shotDamage = 5;
     public GameObject bullet;
     public Transform firePos;
 

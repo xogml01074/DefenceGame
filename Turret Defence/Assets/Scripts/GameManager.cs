@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
         gold = 0;
 
         playerLife = 5;
-        remainingTime = 30.5f;
+        remainingTime = 10.5f;
         monsterCount = 0;
     }
     private void Update()
