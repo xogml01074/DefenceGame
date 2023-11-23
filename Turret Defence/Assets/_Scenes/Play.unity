@@ -255,7 +255,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: X 25
+  m_Text: X 40
 --- !u!222 &133775
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1661,7 +1661,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: X 60
+  m_Text: X 150
 --- !u!222 &33242770
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -29142,7 +29142,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: X 100
+  m_Text: X 200
 --- !u!222 &580714958
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -39718,7 +39718,7 @@ MonoBehaviour:
   mortor: {fileID: 1591110490357510, guid: d4af3966dba2cd746ab019083640eb8c, type: 3}
   cannonDamage: 15
   missleDamage: 20
-  missle2Damage: 7
+  missle2Damage: 12
   catapultDamage: 30
   mortorDamage: 50
   spawnP: {x: 0, y: 0, z: 0}
@@ -60818,7 +60818,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: X 45
+  m_Text: X 90
 --- !u!222 &1858970895
 CanvasRenderer:
   m_ObjectHideFlags: 0

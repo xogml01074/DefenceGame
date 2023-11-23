@@ -19,9 +19,9 @@ public class TurretManager : MonoBehaviour
     public GameObject missle2;
     public GameObject mortor;
 
-    public float cannonDamage = 20;
-    public float missleDamage = 15;
-    public float missle2Damage = 10;
+    public float cannonDamage = 15;
+    public float missleDamage = 20;
+    public float missle2Damage = 12;
     public float catapultDamage = 30;
     public float mortorDamage = 50;
 
@@ -80,12 +80,12 @@ public class TurretManager : MonoBehaviour
     }
     public void Missle1Create()
     {
-        if (gameM.gold < 25)
+        if (gameM.gold < 40)
             return;
 
-        if (gameM.gold >= 25)
+        if (gameM.gold >= 40)
         {
-            gameM.gold -= 25;
+            gameM.gold -= 40;
             Destroy(Instantiate(effect, spawnP + new Vector3(-1, 1.5f, 1), Quaternion.identity), 3f);
             Instantiate(missle1, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
             tU.ExitClickButton();
@@ -94,12 +94,12 @@ public class TurretManager : MonoBehaviour
     }
     public void Missle2Create()
     {
-        if (gameM.gold < 45)
+        if (gameM.gold < 90)
             return;
 
-        if (gameM.gold >= 45)
+        if (gameM.gold >= 90)
         {
-            gameM.gold -= 45;
+            gameM.gold -= 90;
             Destroy(Instantiate(effect, spawnP + new Vector3(-1, 1.5f, 1), Quaternion.identity), 3f);
             Instantiate(missle2, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
             tU.ExitClickButton();
@@ -108,12 +108,12 @@ public class TurretManager : MonoBehaviour
     }
     public void CatapultCreate()
     {
-        if (gameM.gold < 60)
+        if (gameM.gold < 150)
             return;
 
-        if (gameM.gold >= 60)
+        if (gameM.gold >= 150)
         {
-            gameM.gold -= 60;
+            gameM.gold -= 150;
             Destroy(Instantiate(effect, spawnP + new Vector3(-1, 1.5f, 1), Quaternion.identity), 3f);
             Instantiate(catapult, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
             tU.ExitClickButton();
@@ -122,12 +122,12 @@ public class TurretManager : MonoBehaviour
     }
     public void MortorCreate()
     {
-        if (gameM.gold < 100)
+        if (gameM.gold < 200)
             return;
 
-        if (gameM.gold >= 100)
+        if (gameM.gold >= 200)
         {
-            gameM.gold -= 100;
+            gameM.gold -= 200;
             Destroy(Instantiate(effect, spawnP + new Vector3(-1, 1.5f, 1), Quaternion.identity), 3f);
             Instantiate(mortor, spawnP + new Vector3(-1, 1, 1), Quaternion.identity);
             tU.ExitClickButton();

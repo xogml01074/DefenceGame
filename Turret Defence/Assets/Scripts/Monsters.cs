@@ -58,7 +58,7 @@ public class Monsters : MonoBehaviour
         SpawnPoint(transform.position);
 
         monsterSpeed = 1.5f;
-        maxHp = gameM.round * 4.5f;
+        maxHp = gameM.round * 4f;
         currentHp = maxHp;
         monsterDead = false;
 
@@ -196,7 +196,7 @@ public class Monsters : MonoBehaviour
     {
         if (!monsterDead)
         {
-            if (Vector3.Distance(transform.position, endZone.position) <= 0.01f)
+            if (Vector3.Distance(transform.position, endZone.position) <= 0.1f)
             {
                 //soundM.MonsterEndZone(); 추후 몬스터 엔드존 도착 사운드 추가
                 gameM.monsterCount--;

@@ -20,6 +20,11 @@ public class GameManager : MonoBehaviour
 
     public int monsterCount;
 
+    public int r1L;
+    public int r2L;
+    public int r3L;
+    public int r4L;
+
     public MonsterSpawnManager monsterSM;
     public PlayerController playerC; 
     public UIManager uiM;
@@ -34,18 +39,14 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
+        RoundStart();
         GameOver();
+        RemainingTime();
 
         uiM.RoundStartUI(round); // 정비시간이 0초가 됐을때 실행
         uiM.WaitingTimeUI(remainingTime); // 정비시간이 0 보다 크면 실행   
         uiM.SetPlayerLife(playerLife);
-        uiM.GetGold(gold);
-        
-        RemainingTime();
-        RoundStart();
-
-        monsterSM.MonsterSpawn();
-        monsterSM.BossMonsterSpawn();
+        uiM.GetGold(gold);        
     }
 
     public void RoundStart()
@@ -56,36 +57,12 @@ public class GameManager : MonoBehaviour
         if (remainingTime <= 0)
         {
             roundStart = true;
-            if (round < 40)
-            {
-                if (monsterSM.r1Limit < 25)
-                {
-                    monsterSM.r1Limit += 4;
-                    monsterSM.monsterLimit += 4;
-                }
-
-                if (round > 10 && monsterSM.r2Limit < 15)
-                {
-                    monsterSM.r2Limit += 3;
-                    monsterSM.monsterLimit += 3;
-                }
-
-                if (round > 20 && monsterSM.r3Limit < 10)
-                {
-                    monsterSM.r3Limit += 2;
-                    monsterSM.monsterLimit += 2;
-                }
-
-                if (round > 30 && monsterSM.r2Limit < 10)
-                {
-                    monsterSM.r4Limit += 2;
-                    monsterSM.monsterLimit += 2;
-                }
-            }
+            round++;
+            remainingTime = 15.5f;
 
             monsterCount = monsterSM.monsterLimit;
-            round++;
-            remainingTime = 20.5f;
+
+            playerC.shotDamage += 0.5f;
         }
     }
 
@@ -97,7 +74,6 @@ public class GameManager : MonoBehaviour
 
         if (remainingTime > 0 && round % 10 == 0 && (!monsterSM.bossLive))
         {
-            monsterSM.currentLimit = 0;
             playerC.monsters.Clear();
             remainingTime -= Time.deltaTime;
             roundStart = false;
@@ -105,7 +81,8 @@ public class GameManager : MonoBehaviour
 
         else if (remainingTime > 0 && monsterCount == 0)
         {
-            monsterSM.currentLimit = 0;
+            monsterSM.MonsterCount();
+
             playerC.monsters.Clear();
             remainingTime -= Time.deltaTime;
             roundStart = false;
