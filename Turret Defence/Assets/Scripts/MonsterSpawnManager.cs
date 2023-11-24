@@ -12,7 +12,6 @@ public class MonsterSpawnManager : MonoBehaviour
     public Vector3 monsterSpawnPoint4;
 
     public GameObject boss;
-    public int bossCount = 1;
     public bool bossLive = false;
     public Transform[] bossSpawnPs;
     public GameObject monsters;
@@ -25,33 +24,33 @@ public class MonsterSpawnManager : MonoBehaviour
 
     public GameManager gameM;
 
-    private void Start()
-    {
-        monsterLimit = r1Limit + r2Limit + r3Limit + r4Limit; 
-    }
-
     private void Update()
     {
         MonsterSpawn();
-        BossMonsterSpawn();
     }
 
     public void MonsterCount()
     {
-        if ((!gameM.roundStart) && gameM.round < 40)
+        if (gameM.round == 0)
         {
-            r1Limit = gameM.round % 10 * 5;
-            
-            if (gameM.round > 10)
-            r2Limit = gameM.round % 10 * 4;
-
-            if (gameM.round > 20)
-            r3Limit = gameM.round % 10 * 3;
-
-            if (gameM.round > 30)
-            r4Limit = gameM.round % 10 * 2;
+            monsterLimit = 5;
+            return;
         }
-        else if (gameM.round > 40)
+
+        if (gameM.round < 40)
+        {
+            r1Limit = 5 + gameM.round % 10 * 4;
+            
+            if (gameM.round >= 10)
+            r2Limit = 3 + gameM.round % 10 * 3;
+
+            if (gameM.round >= 20)
+            r3Limit = 3 + gameM.round % 10 * 3;
+
+            if (gameM.round >= 30)
+            r4Limit = 2 + gameM.round % 10 * 3;
+        }
+        else if (gameM.round >= 40)
         {
             r1Limit = 50;
             r2Limit = 40;
@@ -62,7 +61,7 @@ public class MonsterSpawnManager : MonoBehaviour
     }
     public void MonsterSpawn()
     {
-        if (!gameM.roundStart && monsterLimit >= 0 || gameM.gameOver)
+        if (!gameM.roundStart || gameM.gameOver)
             return;
 
         if (monsterLimit > 0)
@@ -102,11 +101,7 @@ public class MonsterSpawnManager : MonoBehaviour
     {
         // 보스는 여러종류를 목표로 하지만 중간프로젝트엔 한 종류로 할 예정
         // 10라운드 마다 보스 몬스터 소환
-        if (gameM.roundStart && gameM.round % 10 == 0 && bossCount == 1)
-        {
-            bossCount--;
-            int rdIdx = Random.Range(0, 3);
-            Instantiate(boss, bossSpawnPs[rdIdx].position, Quaternion.identity);
-        }
+        int rdIdx = Random.Range(0, 3);
+        Instantiate(boss, bossSpawnPs[rdIdx].position, Quaternion.identity);
     }
 }

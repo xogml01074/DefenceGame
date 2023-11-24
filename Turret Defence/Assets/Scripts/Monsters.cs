@@ -94,7 +94,7 @@ public class Monsters : MonoBehaviour
         if (!monsterDead)
         {
             // 몬스터가 다음 웨이포인트 까지 도달하지 못했을시 웨이포인트 위치까지 이동
-            if (Vector3.Distance(transform.position, road[dstIdx].position) >= 0.1f)
+            if (Vector3.Distance(transform.position, road[dstIdx].position) >= 0.05f)
             {
                 transform.LookAt(road[dstIdx].position);
                 transform.Translate(Vector3.forward * monsterSpeed * Time.deltaTime);

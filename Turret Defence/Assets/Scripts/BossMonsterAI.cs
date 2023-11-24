@@ -102,8 +102,8 @@ public class BossMonsterAI : MonoBehaviour
     {
         if(currentHp <= 0)
         {
-            gameM.gold += 100;
-            monsterSM.bossCount = 1;
+            gameM.monsterCount = 0;
+            gameM.gold += 50;
             monsterSM.bossLive = false;
             Destroy(gameObject);
         }

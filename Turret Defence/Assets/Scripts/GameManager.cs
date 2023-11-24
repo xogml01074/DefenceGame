@@ -20,11 +20,6 @@ public class GameManager : MonoBehaviour
 
     public int monsterCount;
 
-    public int r1L;
-    public int r2L;
-    public int r3L;
-    public int r4L;
-
     public MonsterSpawnManager monsterSM;
     public PlayerController playerC; 
     public UIManager uiM;
@@ -34,7 +29,7 @@ public class GameManager : MonoBehaviour
         gold = 0;
 
         playerLife = 5;
-        remainingTime = 10.5f;
+        remainingTime = 10.9f;
         monsterCount = 0;
     }
     private void Update()
@@ -56,11 +51,15 @@ public class GameManager : MonoBehaviour
 
         if (remainingTime <= 0)
         {
-            roundStart = true;
-            round++;
-            remainingTime = 15.5f;
-
             monsterCount = monsterSM.monsterLimit;
+
+            round++;
+            if (round != 0 && round % 10 == 0)
+                monsterSM.BossMonsterSpawn();
+
+            roundStart = true;
+            remainingTime = 15.9f;
+
 
             playerC.shotDamage += 0.5f;
         }
@@ -72,14 +71,7 @@ public class GameManager : MonoBehaviour
         if (!playerLive)
             return;
 
-        if (remainingTime > 0 && round % 10 == 0 && (!monsterSM.bossLive))
-        {
-            playerC.monsters.Clear();
-            remainingTime -= Time.deltaTime;
-            roundStart = false;
-        }
-
-        else if (remainingTime > 0 && monsterCount == 0)
+        if (monsterCount == 0)
         {
             monsterSM.MonsterCount();
 
