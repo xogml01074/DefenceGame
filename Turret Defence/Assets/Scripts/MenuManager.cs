@@ -56,7 +56,7 @@ public class MenuManager : MonoBehaviour
 
     public void StartButton()
     {
-        Invoke(nameof(LoadPlayScene), 2f);
+        Invoke(nameof(LoadPlayScene), 1f);
     }
 
     private void LoadPlayScene()

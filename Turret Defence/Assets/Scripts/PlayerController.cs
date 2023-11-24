@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     PlayerState playerState;
 
     public FixedJoystick joystick;
-    public float moveSpeed = 6;
+    public float moveSpeed = 5;
     public float shotRange = 5;
     public float shotDamage = 4.5f;
     public GameObject bullet;
@@ -92,14 +92,14 @@ public class PlayerController : MonoBehaviour
         else if (grassCol.Length > 0)
         {
             playerState = PlayerState.GrassMove;
-            moveSpeed = 3;
+            moveSpeed = 2.5f;
             animator.SetBool("playerOnGround", true);
             animator.SetBool("playerOnWater", false);
         }
         else
         {
             playerState = PlayerState.Move;
-            moveSpeed = 6;
+            moveSpeed = 5;
             animator.SetBool("playerOnGround", false);
             animator.SetBool("playerOnWater", false);
         }

@@ -68138,6 +68138,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1874678987}
     - target: {fileID: 1586118068729869471, guid: e1288788c05a45b4984dcee2ad442adb, type: 3}
+      propertyPath: moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586118068729869471, guid: e1288788c05a45b4984dcee2ad442adb, type: 3}
       propertyPath: shotDamage
       value: 5
       objectReference: {fileID: 0}
