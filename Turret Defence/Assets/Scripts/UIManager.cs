@@ -18,6 +18,8 @@ public class UIManager : MonoBehaviour
     public Text goldUI;
     public GameObject gameOver;
     public Text scoreTxt;
+    public GameObject option;
+    public Animator anim;
 
     public GameManager gameM;
 
@@ -45,15 +47,35 @@ public class UIManager : MonoBehaviour
             gameOver.SetActive(true);
         GameOverScore();
     }
+
+    public void OpenOption()
+    {
+        option.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void CloseOption()
+    {
+        option.SetActive(false);
+        Time.timeScale = 1f;
+    }
+    
+    public void ResumeGame()
+    {
+        Time.timeScale = 1f;
+        option.SetActive(false);
+    }
     public void RestartGame()
     {
         gameOver.SetActive(false);
+        Time.timeScale = 1f;
         SceneManager.LoadScene("Play");
     }
 
     public void QuitGame()
     {
         gameOver.SetActive(false);
+        Time.timeScale = 1f;
         SceneManager.LoadScene("Menu");
     }
 

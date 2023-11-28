@@ -175,7 +175,6 @@ public class PlayerController : MonoBehaviour
 
         Vector3 dir = targetT.position - transform.position; dir.y = 0f;
 
-        soundM.GunShotSound();
         Instantiate(bullet, firePos.position, Quaternion.LookRotation(dir));
         playerState = PlayerState.Idle;
     }
