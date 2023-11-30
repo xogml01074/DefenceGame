@@ -164,7 +164,7 @@ public class PlayerController : MonoBehaviour
         }
 
         if (playerState == PlayerState.Attack)
-            animator.SetTrigger("gunFire"); // 총쏘다 움직이게 되면 사격 애니매이션인 채로 움직임
+            animator.SetTrigger("gunFire");
     }
 
     // 애니메이션 이벤트에 참조연결 

@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
                 monsterSM.BossMonsterSpawn();
 
             roundStart = true;
-            remainingTime = 15.9f;
+            remainingTime = 10.9f;
 
 
             playerC.shotDamage += 0.5f;
